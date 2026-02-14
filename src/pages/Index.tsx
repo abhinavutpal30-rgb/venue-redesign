@@ -5,6 +5,7 @@ import CelebrationMarquee from "@/components/CelebrationMarquee";
 import HowItWorks from "@/components/HowItWorks";
 import RealWeddings from "@/components/RealWeddings";
 import Testimonials from "@/components/Testimonials";
+import VideoTestimonials from "@/components/VideoTestimonials";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import CTASection from "@/components/CTASection";
 import BlogSection from "@/components/BlogSection";
@@ -20,6 +21,7 @@ const Index = () => {
       <CelebrationMarquee />
       <HowItWorks />
       <RealWeddings />
+      <VideoTestimonials />
       <Testimonials />
       <WhyChooseUs />
       <CTASection />

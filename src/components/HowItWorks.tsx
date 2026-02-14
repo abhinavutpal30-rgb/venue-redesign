@@ -34,7 +34,7 @@ const HowItWorks = () => {
         >
           <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Simple Process</p>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-            How It <span className="text-gradient-gold italic">Works</span>
+            How It <span className="text-gradient-gold">Works</span>
           </h2>
         </motion.div>
 

@@ -20,7 +20,7 @@ const WhyChooseUs = () => {
         >
           <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">The Difference</p>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-            Why Choose <span className="text-gradient-gold italic">Venue by Choice?</span>
+            Why Choose <span className="text-gradient-gold">Venue by Choice?</span>
           </h2>
         </motion.div>
 

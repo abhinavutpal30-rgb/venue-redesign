@@ -18,7 +18,7 @@ const BlogSection = () => {
         >
           <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Insights</p>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-            From Our <span className="text-gradient-gold italic">Blog</span>
+            From Our <span className="text-gradient-gold">Blog</span>
           </h2>
         </motion.div>
 

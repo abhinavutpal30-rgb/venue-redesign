@@ -35,7 +35,7 @@ const HeroSection = () => {
         >
           Where Finding Your
           <br />
-          <span className="text-gradient-gold italic">Wedding Venue</span>
+          <span className="text-gradient-gold">Wedding Venue</span>
           <br />
           Is Effortless
         </motion.h1>

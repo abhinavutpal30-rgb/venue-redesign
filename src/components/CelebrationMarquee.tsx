@@ -15,7 +15,7 @@ const CelebrationMarquee = () => {
         className="text-center mb-8"
       >
         <h2 className="text-2xl md:text-3xl font-display font-bold text-primary-foreground">
-          Plan Your <span className="text-gold-light italic">Celebration</span>
+          Plan Your <span className="text-gold-light">Celebration</span>
         </h2>
       </motion.div>
 
