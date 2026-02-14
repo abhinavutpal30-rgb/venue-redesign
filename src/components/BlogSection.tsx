@@ -8,7 +8,7 @@ const blogPosts = [
 
 const BlogSection = () => {
   return (
-    <section className="py-24 px-6 bg-secondary">
+    <section id="blog" className="py-24 px-6 bg-secondary">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -29,7 +29,7 @@ const CuratedVenues = () => {
   const [activeTab, setActiveTab] = useState("Banquet Halls");
 
   return (
-    <section className="py-24 px-6">
+    <section id="venues" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
