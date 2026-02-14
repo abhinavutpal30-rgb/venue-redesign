@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Camera } from "lucide-react";
 
 const RealWeddings = () => {
   const weddings = [
@@ -7,16 +8,18 @@ const RealWeddings = () => {
   ];
 
   return (
-    <section id="real-weddings" className="py-24 px-6 bg-secondary">
-      <div className="max-w-6xl mx-auto">
+    <section id="real-weddings" className="py-28 px-6 bg-secondary relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 rounded-full blur-3xl" />
+
+      <div className="max-w-6xl mx-auto relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Inspiration</p>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
+          <p className="text-gold font-body text-sm tracking-[0.3em] uppercase mb-4">Inspiration</p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-foreground">
             Real <span className="text-gradient-gold">Weddings</span>
           </h2>
           <p className="text-muted-foreground font-body mt-4 max-w-lg mx-auto">
@@ -28,24 +31,25 @@ const RealWeddings = () => {
           {weddings.map((w, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer"
+              transition={{ delay: i * 0.2, duration: 0.6 }}
+              className="group relative rounded-3xl overflow-hidden aspect-[4/3] cursor-pointer shadow-elevated hover:shadow-gold transition-all duration-500"
             >
               <img
                 src={w.image}
                 alt={w.couple}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <span className="inline-block gradient-gold text-accent-foreground text-xs font-body font-semibold px-3 py-1 rounded-full mb-3">
-                  + {w.photos} Photos
-                </span>
-                <h3 className="font-display text-2xl font-bold text-primary-foreground">{w.couple}</h3>
-                <p className="text-primary-foreground/70 font-body text-sm mt-1">{w.city}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="inline-flex items-center gap-2 gradient-gold text-accent-foreground text-xs font-body font-semibold px-4 py-1.5 rounded-full mb-4 shadow-gold">
+                  <Camera className="w-3.5 h-3.5" />
+                  {w.photos} Photos
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">{w.couple}</h3>
+                <p className="text-primary-foreground/60 font-body text-sm mt-1">{w.city}</p>
               </div>
             </motion.div>
           ))}

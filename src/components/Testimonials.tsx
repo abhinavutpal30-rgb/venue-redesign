@@ -24,16 +24,18 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="testimonials" className="py-28 px-6 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
+
+      <div className="max-w-6xl mx-auto relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Love Stories</p>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
+          <p className="text-gold font-body text-sm tracking-[0.3em] uppercase mb-4">Love Stories</p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-foreground">
             What Couples <span className="text-gradient-gold">Say</span>
           </h2>
         </motion.div>
@@ -42,22 +44,25 @@ const Testimonials = () => {
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-card rounded-xl p-8 border border-border/50 shadow-sm hover:shadow-lg transition-shadow relative"
+              transition={{ delay: i * 0.15, duration: 0.6 }}
+              whileHover={{ y: -6 }}
+              className="bg-card rounded-2xl p-8 border border-border/50 shadow-md hover:shadow-elevated transition-all duration-500 relative group"
             >
-              <Quote className="w-8 h-8 text-gold/30 absolute top-6 right-6" />
-              <div className="flex gap-1 mb-4">
+              <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center">
+                <Quote className="w-5 h-5 text-gold/50" />
+              </div>
+              <div className="flex gap-1 mb-5">
                 {Array.from({ length: t.rating }).map((_, j) => (
                   <Star key={j} className="w-4 h-4 fill-gold text-gold" />
                 ))}
               </div>
-              <p className="text-muted-foreground font-body text-sm leading-relaxed mb-6">"{t.text}"</p>
-              <div className="flex items-center gap-3">
-                <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
-                <span className="font-display font-semibold text-foreground text-sm">{t.name}</span>
+              <p className="text-muted-foreground font-body text-sm leading-relaxed mb-8">"{t.text}"</p>
+              <div className="flex items-center gap-3 pt-5 border-t border-border">
+                <img src={t.image} alt={t.name} className="w-12 h-12 rounded-full object-cover border-2 border-gold/20" />
+                <span className="font-display font-semibold text-foreground">{t.name}</span>
               </div>
             </motion.div>
           ))}

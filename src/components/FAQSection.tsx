@@ -15,40 +15,48 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section id="faq" className="py-28 px-6 relative overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
+
+      <div className="max-w-3xl mx-auto relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Got Questions?</p>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
+          <p className="text-gold font-body text-sm tracking-[0.3em] uppercase mb-4">Got Questions?</p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-foreground">
             Frequently Asked <span className="text-gradient-gold">Questions</span>
           </h2>
         </motion.div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {faqs.map((faq, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-card rounded-xl border border-border/50 overflow-hidden"
+              transition={{ delay: i * 0.06 }}
+              className={`bg-card rounded-2xl border overflow-hidden transition-all duration-300 ${
+                openIndex === i ? "border-gold/30 shadow-gold" : "border-border/50"
+              }`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left"
+                className="w-full px-7 py-6 flex items-center justify-between gap-4 text-left"
               >
-                <span className="font-display font-semibold text-foreground text-sm md:text-base">{faq.q}</span>
-                {openIndex === i ? (
-                  <Minus className="w-5 h-5 text-gold shrink-0" />
-                ) : (
-                  <Plus className="w-5 h-5 text-muted-foreground shrink-0" />
-                )}
+                <span className="font-display font-semibold text-foreground">{faq.q}</span>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                  openIndex === i ? "gradient-gold" : "bg-secondary"
+                }`}>
+                  {openIndex === i ? (
+                    <Minus className="w-4 h-4 text-accent-foreground" />
+                  ) : (
+                    <Plus className="w-4 h-4 text-muted-foreground" />
+                  )}
+                </div>
               </button>
               <AnimatePresence>
                 {openIndex === i && (
@@ -58,7 +66,7 @@ const FAQSection = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="px-6 pb-5">
+                    <div className="px-7 pb-6">
                       <p className="text-muted-foreground font-body text-sm leading-relaxed">{faq.a}</p>
                     </div>
                   </motion.div>

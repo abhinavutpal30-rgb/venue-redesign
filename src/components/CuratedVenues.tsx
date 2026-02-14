@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import VenueCard from "./VenueCard";
 
 const tabs = ["Banquet Halls", "Hotels", "Resorts"];
@@ -29,47 +29,66 @@ const CuratedVenues = () => {
   const [activeTab, setActiveTab] = useState("Banquet Halls");
 
   return (
-    <section id="venues" className="py-24 px-6">
+    <section id="venues" className="py-28 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Handpicked for You</p>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-gold font-body text-sm tracking-[0.3em] uppercase mb-4"
+          >
+            Handpicked for You
+          </motion.p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-foreground">
             Curated Venues Loved by <span className="text-gradient-gold">Everyone</span>
           </h2>
         </motion.div>
 
-        <div className="flex justify-center gap-2 mb-12">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 ${
-                activeTab === tab
-                  ? "gradient-wine text-primary-foreground shadow-lg"
-                  : "bg-secondary text-muted-foreground hover:bg-accent"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+        <div className="flex justify-center mb-14">
+          <div className="inline-flex bg-secondary rounded-2xl p-1.5 gap-1">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`relative px-7 py-3 rounded-xl font-body text-sm font-medium transition-all duration-300 ${
+                  activeTab === tab
+                    ? "gradient-wine text-primary-foreground shadow-wine"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {venues[activeTab as keyof typeof venues].map((venue) => (
-            <VenueCard key={venue.name} {...venue} />
-          ))}
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7"
+          >
+            {venues[activeTab as keyof typeof venues].map((venue, i) => (
+              <motion.div
+                key={venue.name}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <VenueCard {...venue} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
