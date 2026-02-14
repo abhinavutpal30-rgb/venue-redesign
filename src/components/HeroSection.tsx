@@ -10,7 +10,7 @@ const HeroSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroBg})` }}
