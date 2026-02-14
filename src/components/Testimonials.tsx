@@ -34,7 +34,7 @@ const Testimonials = () => {
         >
           <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Love Stories</p>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-            What Couples <span className="text-gradient-gold italic">Say</span>
+            What Couples <span className="text-gradient-gold">Say</span>
           </h2>
         </motion.div>
 

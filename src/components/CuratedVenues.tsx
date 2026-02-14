@@ -39,7 +39,7 @@ const CuratedVenues = () => {
         >
           <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Handpicked for You</p>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-            Curated Venues Loved by <span className="text-gradient-gold italic">Everyone</span>
+            Curated Venues Loved by <span className="text-gradient-gold">Everyone</span>
           </h2>
         </motion.div>
 

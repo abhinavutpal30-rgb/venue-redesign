@@ -17,7 +17,7 @@ const RealWeddings = () => {
         >
           <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Inspiration</p>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
-            Real <span className="text-gradient-gold italic">Weddings</span>
+            Real <span className="text-gradient-gold">Weddings</span>
           </h2>
           <p className="text-muted-foreground font-body mt-4 max-w-lg mx-auto">
             From our venues to their vows — explore stories that inspire yours
