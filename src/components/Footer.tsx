@@ -1,4 +1,5 @@
 import { Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -26,9 +27,14 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-bold text-background mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-3">
-              {["Home", "Venues", "Wedding Services", "Blog"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-background/40 font-body text-sm hover:text-gold transition-colors hover:translate-x-1 inline-block">{link}</a>
+              {[
+                { label: "Home", to: "/" },
+                { label: "Venues", to: "/venues" },
+                { label: "About Us", to: "/about" },
+                { label: "Contact", to: "/contact" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to} className="text-background/40 font-body text-sm hover:text-gold transition-colors hover:translate-x-1 inline-block">{link.label}</Link>
                 </li>
               ))}
             </ul>
