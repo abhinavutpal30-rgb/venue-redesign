@@ -74,7 +74,8 @@ const Venues = () => {
           transition={{ delay: 0.3 }}
           className="glass rounded-2xl shadow-elevated border border-border/30 p-4 md:p-6"
         >
-          <div className="flex items-center gap-3">
+          {/* Search Bar */}
+          <div className="flex items-center gap-3 mb-5">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
@@ -85,60 +86,41 @@ const Venues = () => {
                 className="w-full pl-12 pr-4 py-3 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 transition-all"
               />
             </div>
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl font-body text-sm font-medium transition-all ${
-                showFilters || activeFilters > 0
-                  ? "gradient-gold text-accent-foreground shadow-gold"
-                  : "bg-secondary/50 text-muted-foreground hover:bg-secondary border border-border/50"
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              Filters
-              {activeFilters > 0 && (
-                <span className="w-5 h-5 rounded-full bg-wine text-primary-foreground text-xs flex items-center justify-center">{activeFilters}</span>
-              )}
-            </button>
           </div>
 
-          {showFilters && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="mt-4 pt-4 border-t border-border/30 grid grid-cols-1 md:grid-cols-3 gap-4"
-            >
-              <div>
-                <label className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2 block">City</label>
-                <div className="flex flex-wrap gap-2">
-                  {cities.map((c) => (
-                    <button key={c} onClick={() => setCity(c)} className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${city === c ? "gradient-gold text-accent-foreground shadow-gold" : "bg-secondary/50 text-muted-foreground hover:bg-secondary"}`}>
-                      {c}
-                    </button>
-                  ))}
-                </div>
+          {/* Filter Options */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-border/30">
+            <div>
+              <label className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2 block">City</label>
+              <div className="flex flex-wrap gap-2">
+                {cities.map((c) => (
+                  <button key={c} onClick={() => setCity(c)} className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${city === c ? "gradient-gold text-accent-foreground shadow-gold" : "bg-secondary/50 text-muted-foreground hover:bg-secondary"}`}>
+                    {c}
+                  </button>
+                ))}
               </div>
-              <div>
-                <label className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2 block">Type</label>
-                <div className="flex flex-wrap gap-2">
-                  {types.map((t) => (
-                    <button key={t} onClick={() => setType(t)} className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${type === t ? "gradient-gold text-accent-foreground shadow-gold" : "bg-secondary/50 text-muted-foreground hover:bg-secondary"}`}>
-                      {t}
-                    </button>
-                  ))}
-                </div>
+            </div>
+            <div>
+              <label className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2 block">Type</label>
+              <div className="flex flex-wrap gap-2">
+                {types.map((t) => (
+                  <button key={t} onClick={() => setType(t)} className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${type === t ? "gradient-gold text-accent-foreground shadow-gold" : "bg-secondary/50 text-muted-foreground hover:bg-secondary"}`}>
+                    {t}
+                  </button>
+                ))}
               </div>
-              <div>
-                <label className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2 block">Budget</label>
-                <div className="flex flex-wrap gap-2">
-                  {budgets.map((b) => (
-                    <button key={b} onClick={() => setBudget(b)} className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${budget === b ? "gradient-gold text-accent-foreground shadow-gold" : "bg-secondary/50 text-muted-foreground hover:bg-secondary"}`}>
-                      {budgetLabels[b]}
-                    </button>
-                  ))}
-                </div>
+            </div>
+            <div>
+              <label className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2 block">Budget</label>
+              <div className="flex flex-wrap gap-2">
+                {budgets.map((b) => (
+                  <button key={b} onClick={() => setBudget(b)} className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${budget === b ? "gradient-gold text-accent-foreground shadow-gold" : "bg-secondary/50 text-muted-foreground hover:bg-secondary"}`}>
+                    {budgetLabels[b]}
+                  </button>
+                ))}
               </div>
-            </motion.div>
-          )}
+            </div>
+          </div>
         </motion.div>
       </section>
 
