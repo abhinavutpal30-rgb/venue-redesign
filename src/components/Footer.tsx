@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, hsl(38 70% 55%), transparent 40%)" }} />
 
       <div className="max-w-6xl mx-auto relative">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
             <h3 className="font-display text-2xl font-bold text-foreground mb-4">
               <span className="text-gradient-gold">Venue</span> by Choice
