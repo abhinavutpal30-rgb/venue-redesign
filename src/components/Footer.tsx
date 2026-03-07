@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, hsl(38 70% 55%), transparent 40%)" }} />
 
       <div className="max-w-6xl mx-auto relative">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
             <h3 className="font-display text-2xl font-bold text-foreground mb-4">
               <span className="text-gradient-gold">Venue</span> by Choice
@@ -25,25 +25,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-display font-bold text-foreground mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
+            <h4 className="font-display font-bold text-foreground mb-5 text-sm uppercase tracking-wider">Wedding Services</h4>
             <ul className="space-y-3">
-              {[
-                { label: "Home", to: "/" },
-                { label: "Venues", to: "/venues" },
-                { label: "About Us", to: "/about" },
-                { label: "Contact", to: "/contact" },
-              ].map((link) => (
-                <li key={link.label}>
-                  <Link to={link.to} className="text-muted-foreground font-body text-sm hover:text-gold transition-colors hover:translate-x-1 inline-block">{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-display font-bold text-foreground mb-5 text-sm uppercase tracking-wider">Tools</h4>
-            <ul className="space-y-3">
-              {["Compare Venues", "Budget Calculator", "Planning Checklist", "Real Weddings"].map((link) => (
+              {["Venue", "Photography", "Videography", "Bridal Make Up"].map((link) => (
                 <li key={link}>
                   <a href="#" className="text-muted-foreground font-body text-sm hover:text-gold transition-colors hover:translate-x-1 inline-block">{link}</a>
                 </li>
@@ -52,11 +36,36 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-display font-bold text-foreground mb-5 text-sm uppercase tracking-wider">Contact</h4>
-            <ul className="space-y-3 text-muted-foreground font-body text-sm">
-              <li>📞 +91 9065645111</li>
-              <li>📧 info@venuebychoice.com</li>
-              <li>📍 Patna & Kolkata, India</li>
+            <h4 className="font-display font-bold text-foreground mb-5 text-sm uppercase tracking-wider">Explore By City</h4>
+            <ul className="space-y-3">
+              {[
+                "Wedding Services in Kolkata",
+                "Wedding Services in Patna",
+                "Venue By Patna",
+                "Venue By Kolkata",
+              ].map((link) => (
+                <li key={link}>
+                  <a href="#" className="text-muted-foreground font-body text-sm hover:text-gold transition-colors hover:translate-x-1 inline-block">{link}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display font-bold text-foreground mb-5 text-sm uppercase tracking-wider">Services By City</h4>
+            <ul className="space-y-3">
+              {[
+                "Photographer in Patna",
+                "Videographer in Patna",
+                "Makeup Artist in Patna",
+                "Photographer in Kolkata",
+                "Videographer in Kolkata",
+                "Makeup Artist in Kolkata",
+              ].map((link) => (
+                <li key={link}>
+                  <a href="#" className="text-muted-foreground font-body text-sm hover:text-gold transition-colors hover:translate-x-1 inline-block">{link}</a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
