@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground py-20 px-6 relative overflow-hidden">
+    <footer className="bg-secondary py-20 px-6 relative overflow-hidden">
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, hsl(38 70% 55%), transparent 40%)" }} />
 
       <div className="max-w-6xl mx-auto relative">
