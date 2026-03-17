@@ -8,9 +8,9 @@ type NavLink = { label: string; target?: string; href?: string };
 const navLinks: NavLink[] = [
   { label: "Home", target: "hero" },
   { label: "Venues", href: "/venues" },
-  { label: "How It Works", target: "how-it-works" },
-  { label: "Real Weddings", target: "real-weddings" },
-  { label: "Testimonials", target: "testimonials" },
+  { label: "Services", href: "/wedding-services" },
+  { label: "Compare", href: "/compare" },
+  { label: "Planning Tools", href: "/planning-tools" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
