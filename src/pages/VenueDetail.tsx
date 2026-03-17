@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   MapPin, Users, Star, Phone, Mail, Calendar, Check, ChevronLeft,
   ChevronRight, Heart, Clock, Utensils, Car, Music, Wifi, Zap,
-  Shield, Camera, Sparkles, ChevronDown, MessageSquare, Eye
+  Shield, Camera, Sparkles, ChevronDown, MessageSquare, Eye,
+  Ban, AlertTriangle, HelpCircle, Navigation
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -55,6 +56,26 @@ const reviews = [
   { name: "Anjali Devi", date: "05 Aug 2025", rating: 4, text: "Decent experience overall. Good food and nice ambiance. The AC could be a bit better in the lawn area during summer." },
 ];
 
+const policies = [
+  { icon: Clock, label: "Timings", detail: "Morning: 7 AM – 12 PM | Evening: 6 PM – 12 AM" },
+  { icon: Utensils, label: "Catering", detail: "Both in-house and external catering allowed. Outside catering charges apply." },
+  { icon: Music, label: "Music & DJ", detail: "Music allowed till 10 PM as per local regulations. DJ permitted indoors only." },
+  { icon: Car, label: "Parking", detail: "Complimentary valet parking for up to 200 cars. Additional parking nearby." },
+  { icon: Camera, label: "Decoration", detail: "In-house decoration available. Outside decorators allowed with prior approval." },
+  { icon: Ban, label: "Alcohol", detail: "Alcohol is permitted. Venue can arrange bar services at additional cost." },
+  { icon: AlertTriangle, label: "Cancellation", detail: "50% refund if cancelled 30+ days before event. No refund within 30 days." },
+  { icon: Shield, label: "Security Deposit", detail: "₹25,000 refundable security deposit required at the time of booking." },
+];
+
+const faqs = [
+  { q: "What is the booking process?", a: "You can book by visiting the venue or calling us. A 30% advance payment is required to confirm the booking along with the security deposit." },
+  { q: "Is outside catering allowed?", a: "Yes, outside catering is allowed with a nominal charge. However, we recommend our in-house catering for the best experience and seamless coordination." },
+  { q: "What is the cancellation policy?", a: "Cancellations made 30+ days before the event receive a 50% refund. Cancellations within 30 days of the event are non-refundable. The security deposit is refundable in all cases." },
+  { q: "Are there any restrictions on music?", a: "As per local regulations, outdoor music is allowed until 10 PM. Indoor music with DJ can continue till midnight. We provide soundproof halls for late-night celebrations." },
+  { q: "Do you provide accommodation for guests?", a: "Yes, we have tie-ups with nearby hotels offering special rates for wedding guests. The bridal suite is included in Gold and Platinum packages." },
+  { q: "Can we visit the venue before booking?", a: "Absolutely! We encourage venue visits. You can schedule a visit by calling us or filling the booking form. We also offer virtual tours via video call." },
+];
+
 const tabs = ["Overview", "Areas & Capacity", "Food Packages", "Reviews"];
 
 const VenueDetail = () => {
@@ -64,6 +85,7 @@ const VenueDetail = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [showFullAbout, setShowFullAbout] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const nextImage = () => setCurrentImage((p) => (p + 1) % venueImages.length);
   const prevImage = () => setCurrentImage((p) => (p - 1 + venueImages.length) % venueImages.length);
@@ -368,9 +390,91 @@ const VenueDetail = () => {
                 )}
               </motion.div>
             )}
-          </div>
 
-          {/* Sticky Sidebar */}
+            {/* Policies */}
+            {(activeTab === "Overview") && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-5">Venue Policies</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {policies.map((policy) => (
+                    <div key={policy.label} className="flex gap-3 p-4 bg-card rounded-xl border border-border/30">
+                      <policy.icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-body font-bold text-sm text-foreground mb-0.5">{policy.label}</p>
+                        <p className="font-body text-xs text-muted-foreground leading-relaxed">{policy.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Location Map */}
+            {(activeTab === "Overview") && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} id="map-section">
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-2">Location</h2>
+                <p className="font-body text-sm text-muted-foreground mb-4 flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-accent" /> Boring Road, Patna, Bihar 800001
+                </p>
+                <div className="rounded-2xl overflow-hidden border border-border/30 h-72">
+                  <iframe
+                    title="Venue Location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3597.5!2d85.1376!3d25.6093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDM2JzMzLjUiTiA4NcKwMDgnMTUuNCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=25.6093,85.1376"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-body font-semibold text-accent hover:underline"
+                >
+                  <Navigation className="w-4 h-4" /> Get Directions
+                </a>
+              </motion.div>
+            )}
+
+            {/* FAQ */}
+            {(activeTab === "Overview") && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-5">
+                  <HelpCircle className="w-5 h-5 inline mr-2 text-accent" />
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-3">
+                  {faqs.map((faq, i) => (
+                    <div key={i} className="bg-card rounded-xl border border-border/30 overflow-hidden">
+                      <button
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        className="w-full flex items-center justify-between p-4 text-left"
+                      >
+                        <span className="font-body font-semibold text-sm text-foreground pr-4">{faq.q}</span>
+                        <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""}`} />
+                      </button>
+                      <AnimatePresence>
+                        {openFaq === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <p className="px-4 pb-4 font-body text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </div>
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-5">
               {/* Pricing Card */}
