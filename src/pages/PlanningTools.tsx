@@ -5,19 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { downloadBudgetPdf, downloadChecklistPdf, downloadGuestEstimatePdf } from "@/lib/planningPdf";
 
-// Budget Calculator
-const defaultBudgetItems = [
-  { id: 1, category: "Venue", amount: 200000, paid: 0 },
-  { id: 2, category: "Catering", amount: 150000, paid: 0 },
-  { id: 3, category: "Photography", amount: 35000, paid: 0 },
-  { id: 4, category: "Videography", amount: 45000, paid: 0 },
-  { id: 5, category: "Decoration", amount: 60000, paid: 0 },
-  { id: 6, category: "DJ & Music", amount: 20000, paid: 0 },
-  { id: 7, category: "Bridal Makeup", amount: 15000, paid: 0 },
-  { id: 8, category: "Invitations", amount: 10000, paid: 0 },
-  { id: 9, category: "Clothing & Jewellery", amount: 100000, paid: 0 },
-  { id: 10, category: "Miscellaneous", amount: 50000, paid: 0 },
-];
+// Budget Calculator — starts empty, user adds their own items
+const suggestedCategories = ["Venue", "Catering", "Photography", "Videography", "Decoration", "DJ & Music", "Bridal Makeup", "Invitations", "Clothing & Jewellery", "Miscellaneous"];
+
 
 // Checklist
 const defaultChecklist = [
