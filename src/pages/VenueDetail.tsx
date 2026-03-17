@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   MapPin, Users, Star, Phone, Mail, Calendar, Check, ChevronLeft,
   ChevronRight, Heart, Clock, Utensils, Car, Music, Wifi, Zap,
-  Shield, Camera, Sparkles, ChevronDown, MessageSquare, Eye
+  Shield, Camera, Sparkles, ChevronDown, MessageSquare, Eye,
+  Ban, AlertTriangle, HelpCircle, Navigation
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
