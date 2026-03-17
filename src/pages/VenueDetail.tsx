@@ -85,6 +85,7 @@ const VenueDetail = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [showFullAbout, setShowFullAbout] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const nextImage = () => setCurrentImage((p) => (p + 1) % venueImages.length);
   const prevImage = () => setCurrentImage((p) => (p - 1 + venueImages.length) % venueImages.length);
