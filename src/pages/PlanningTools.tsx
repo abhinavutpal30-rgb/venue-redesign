@@ -42,7 +42,7 @@ const PlanningTools = () => {
   const [activeTool, setActiveTool] = useState("budget");
 
   // Budget state
-  const [budgetItems, setBudgetItems] = useState(defaultBudgetItems);
+  const [budgetItems, setBudgetItems] = useState<{id: number; category: string; amount: number; paid: number}[]>([]);
   const [newCategory, setNewCategory] = useState("");
   const [newAmount, setNewAmount] = useState("");
 
