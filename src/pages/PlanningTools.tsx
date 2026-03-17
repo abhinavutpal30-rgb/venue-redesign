@@ -202,6 +202,17 @@ const PlanningTools = () => {
                 </div>
               </div>
             </div>
+
+            {/* Download Button */}
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={() => downloadBudgetPdf(budgetItems)}
+                className="flex items-center gap-2 gradient-wine-deep text-primary-foreground px-6 py-3 rounded-xl font-body font-semibold hover:opacity-90 transition-opacity shadow-elevated"
+              >
+                <Download className="w-5 h-5" /> Download Budget as PDF
+              </button>
+            </div>
+            </div>
           </motion.div>
         )}
 
