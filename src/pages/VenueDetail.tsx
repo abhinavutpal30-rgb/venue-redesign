@@ -56,6 +56,26 @@ const reviews = [
   { name: "Anjali Devi", date: "05 Aug 2025", rating: 4, text: "Decent experience overall. Good food and nice ambiance. The AC could be a bit better in the lawn area during summer." },
 ];
 
+const policies = [
+  { icon: Clock, label: "Timings", detail: "Morning: 7 AM – 12 PM | Evening: 6 PM – 12 AM" },
+  { icon: Utensils, label: "Catering", detail: "Both in-house and external catering allowed. Outside catering charges apply." },
+  { icon: Music, label: "Music & DJ", detail: "Music allowed till 10 PM as per local regulations. DJ permitted indoors only." },
+  { icon: Car, label: "Parking", detail: "Complimentary valet parking for up to 200 cars. Additional parking nearby." },
+  { icon: Camera, label: "Decoration", detail: "In-house decoration available. Outside decorators allowed with prior approval." },
+  { icon: Ban, label: "Alcohol", detail: "Alcohol is permitted. Venue can arrange bar services at additional cost." },
+  { icon: AlertTriangle, label: "Cancellation", detail: "50% refund if cancelled 30+ days before event. No refund within 30 days." },
+  { icon: Shield, label: "Security Deposit", detail: "₹25,000 refundable security deposit required at the time of booking." },
+];
+
+const faqs = [
+  { q: "What is the booking process?", a: "You can book by visiting the venue or calling us. A 30% advance payment is required to confirm the booking along with the security deposit." },
+  { q: "Is outside catering allowed?", a: "Yes, outside catering is allowed with a nominal charge. However, we recommend our in-house catering for the best experience and seamless coordination." },
+  { q: "What is the cancellation policy?", a: "Cancellations made 30+ days before the event receive a 50% refund. Cancellations within 30 days of the event are non-refundable. The security deposit is refundable in all cases." },
+  { q: "Are there any restrictions on music?", a: "As per local regulations, outdoor music is allowed until 10 PM. Indoor music with DJ can continue till midnight. We provide soundproof halls for late-night celebrations." },
+  { q: "Do you provide accommodation for guests?", a: "Yes, we have tie-ups with nearby hotels offering special rates for wedding guests. The bridal suite is included in Gold and Platinum packages." },
+  { q: "Can we visit the venue before booking?", a: "Absolutely! We encourage venue visits. You can schedule a visit by calling us or filling the booking form. We also offer virtual tours via video call." },
+];
+
 const tabs = ["Overview", "Areas & Capacity", "Food Packages", "Reviews"];
 
 const VenueDetail = () => {
