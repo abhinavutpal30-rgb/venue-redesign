@@ -212,7 +212,6 @@ const PlanningTools = () => {
                 <Download className="w-5 h-5" /> Download Budget as PDF
               </button>
             </div>
-            </div>
           </motion.div>
         )}
 
