@@ -6,22 +6,22 @@ const tabs = ["Banquet Halls", "Hotels", "Resorts"];
 
 const venues = {
   "Banquet Halls": [
-    { name: "Varmala Banquet", image: "https://venuebychoice.com/wp-content/uploads/2025/05/vvv.jpg", price: "₹1,499/person", address: "Tegharia, Kolkata, West Bengal", capacity: "300–400 Guests", rating: 3.9, reviews: 13 },
-    { name: "Vrindaban Banquet", image: "https://venuebychoice.com/wp-content/uploads/2025/05/x.jpg", price: "₹1,499/person", address: "Gariahat, Kolkata, West Bengal 700029", capacity: "Up to 750 Guests", rating: 3.9, reviews: 10 },
-    { name: "Shree Banquets", image: "https://venuebychoice.com/wp-content/uploads/2025/05/3-14.jpg", price: "₹1,499/person", address: "Tangra, Kolkata, West Bengal 700015", capacity: "Seating: 700 | Max: 1050", rating: 4.1, reviews: 13 },
-    { name: "AJ's Banquet", image: "https://venuebychoice.com/wp-content/uploads/2025/05/1-6.jpg", price: "₹1,499/person", address: "Bara Bazar, Jorasanko, Kolkata 700007", capacity: "1000 seated, 1500 floating", rating: 4.0, reviews: 17 },
+    { id: "varmala-banquet", name: "Varmala Banquet", image: "https://venuebychoice.com/wp-content/uploads/2025/05/vvv.jpg", price: "₹1,499/person", address: "Tegharia, Kolkata, West Bengal", capacity: "300–400 Guests", rating: 3.9, reviews: 13 },
+    { id: "vrindaban-banquet", name: "Vrindaban Banquet", image: "https://venuebychoice.com/wp-content/uploads/2025/05/x.jpg", price: "₹1,499/person", address: "Gariahat, Kolkata, West Bengal 700029", capacity: "Up to 750 Guests", rating: 3.9, reviews: 10 },
+    { id: "shree-banquets", name: "Shree Banquets", image: "https://venuebychoice.com/wp-content/uploads/2025/05/3-14.jpg", price: "₹1,499/person", address: "Tangra, Kolkata, West Bengal 700015", capacity: "Seating: 700 | Max: 1050", rating: 4.1, reviews: 13 },
+    { id: "ajs-banquet", name: "AJ's Banquet", image: "https://venuebychoice.com/wp-content/uploads/2025/05/1-6.jpg", price: "₹1,499/person", address: "Bara Bazar, Jorasanko, Kolkata 700007", capacity: "1000 seated, 1500 floating", rating: 4.0, reviews: 17 },
   ],
   "Hotels": [
-    { name: "Urban Cliff", image: "https://venuebychoice.com/wp-content/uploads/2025/05/7-21.jpg", price: "₹1,499/person", address: "42/1, Tiljala Road, Kolkata-700046", capacity: "50–600 Guests", rating: 5.0, reviews: 13 },
-    { name: "Hyatt Centric Ballygunge", image: "https://venuebychoice.com/wp-content/uploads/2025/05/6-3.jpg", price: "₹1,499/person", address: "17 Garcha 1st Lane, Kolkata 700019", capacity: "Premium", rating: 5.0, reviews: 25 },
-    { name: "Royal Garden Hotel", image: "https://venuebychoice.com/wp-content/uploads/2025/06/7.jpg", price: "₹1,499/person", address: "Park Street, Kolkata", capacity: "150–250 Guests", rating: 4.0, reviews: 13 },
-    { name: "Hotel Bliss", image: "https://venuebychoice.com/wp-content/uploads/2025/07/New-Project-2025-07-03T123709.461.jpg", price: "₹1,499/person", address: "Ramkrishan Nagar, Patna 800007", capacity: "150–700 Guests", rating: 4.0, reviews: 17 },
+    { id: "urban-cliff", name: "Urban Cliff", image: "https://venuebychoice.com/wp-content/uploads/2025/05/7-21.jpg", price: "₹1,499/person", address: "42/1, Tiljala Road, Kolkata-700046", capacity: "50–600 Guests", rating: 5.0, reviews: 13 },
+    { id: "hyatt-centric-ballygunge", name: "Hyatt Centric Ballygunge", image: "https://venuebychoice.com/wp-content/uploads/2025/05/6-3.jpg", price: "₹1,499/person", address: "17 Garcha 1st Lane, Kolkata 700019", capacity: "Premium", rating: 5.0, reviews: 25 },
+    { id: "royal-garden-hotel", name: "Royal Garden Hotel", image: "https://venuebychoice.com/wp-content/uploads/2025/06/7.jpg", price: "₹1,499/person", address: "Park Street, Kolkata", capacity: "150–250 Guests", rating: 4.0, reviews: 13 },
+    { id: "hotel-bliss", name: "Hotel Bliss", image: "https://venuebychoice.com/wp-content/uploads/2025/07/New-Project-2025-07-03T123709.461.jpg", price: "₹1,499/person", address: "Ramkrishan Nagar, Patna 800007", capacity: "150–700 Guests", rating: 4.0, reviews: 17 },
   ],
   "Resorts": [
-    { name: "Ashiyana Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/05/Venue-Gallery-Images9-2.jpg", price: "₹1,499/person", address: "Ashiana-Digha Rd, Patna 800011", capacity: "300–600 Guests", rating: 4.0, reviews: 25 },
-    { name: "Digha Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/05/Venue-Gallery-Images3-3.jpg", price: "₹1,499/person", address: "Ghurdaur Road, Patna 800011", capacity: "Up to 1,500 Guests", rating: 3.9, reviews: 29 },
-    { name: "Jungle Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/07/New-Project-2025-07-03T140722.207.jpg", price: "₹1,499/person", address: "Marcha – Mirchi Road, Patna 800009", capacity: "Up to 1,200 Guests", rating: 4.0, reviews: 19 },
-    { name: "Maverick Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/07/New-Project-2025-07-03T144354.301.jpg", price: "₹1,499/person", address: "Saguna Khagaul Rd, Patna 801105", capacity: "Premium", rating: 4.3, reviews: 30 },
+    { id: "ashiyana-resort", name: "Ashiyana Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/05/Venue-Gallery-Images9-2.jpg", price: "₹1,499/person", address: "Ashiana-Digha Rd, Patna 800011", capacity: "300–600 Guests", rating: 4.0, reviews: 25 },
+    { id: "digha-resort", name: "Digha Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/05/Venue-Gallery-Images3-3.jpg", price: "₹1,499/person", address: "Ghurdaur Road, Patna 800011", capacity: "Up to 1,500 Guests", rating: 3.9, reviews: 29 },
+    { id: "jungle-resort", name: "Jungle Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/07/New-Project-2025-07-03T140722.207.jpg", price: "₹1,499/person", address: "Marcha – Mirchi Road, Patna 800009", capacity: "Up to 1,200 Guests", rating: 4.0, reviews: 19 },
+    { id: "maverick-resort", name: "Maverick Resort", image: "https://venuebychoice.com/wp-content/uploads/2025/07/New-Project-2025-07-03T144354.301.jpg", price: "₹1,499/person", address: "Saguna Khagaul Rd, Patna 801105", capacity: "Premium", rating: 4.3, reviews: 30 },
   ],
 };
 
