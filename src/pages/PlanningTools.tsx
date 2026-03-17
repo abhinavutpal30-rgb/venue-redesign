@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Calculator, Users, Calendar, IndianRupee, CheckSquare, Percent, Plus, Trash2, ChevronDown, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { downloadBudgetPdf, downloadChecklistPdf, downloadGuestEstimatePdf } from "@/lib/planningPdf";
 
 // Budget Calculator
 const defaultBudgetItems = [
