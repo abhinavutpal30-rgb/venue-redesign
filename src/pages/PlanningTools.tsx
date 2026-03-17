@@ -69,6 +69,10 @@ const PlanningTools = () => {
     setBudgetItems(budgetItems.map((i) => (i.id === id ? { ...i, paid } : i)));
   };
 
+  const updateAmount = (id: number, amount: number) => {
+    setBudgetItems(budgetItems.map((i) => (i.id === id ? { ...i, amount } : i)));
+  };
+
   const removeBudgetItem = (id: number) => {
     setBudgetItems(budgetItems.filter((i) => i.id !== id));
   };
