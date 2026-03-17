@@ -119,7 +119,7 @@ const Navbar = () => {
                 </motion.button>
               ))}
               <button
-                onClick={() => { scrollTo("cta"); setIsOpen(false); }}
+                onClick={() => { navigate("/list-your-venue"); setIsOpen(false); }}
                 className="inline-block gradient-gold text-accent-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-full mt-3"
               >
                 List Your Venue
