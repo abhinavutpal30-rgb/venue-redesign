@@ -5,19 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { downloadBudgetPdf, downloadChecklistPdf, downloadGuestEstimatePdf } from "@/lib/planningPdf";
 
-// Budget Calculator
-const defaultBudgetItems = [
-  { id: 1, category: "Venue", amount: 200000, paid: 0 },
-  { id: 2, category: "Catering", amount: 150000, paid: 0 },
-  { id: 3, category: "Photography", amount: 35000, paid: 0 },
-  { id: 4, category: "Videography", amount: 45000, paid: 0 },
-  { id: 5, category: "Decoration", amount: 60000, paid: 0 },
-  { id: 6, category: "DJ & Music", amount: 20000, paid: 0 },
-  { id: 7, category: "Bridal Makeup", amount: 15000, paid: 0 },
-  { id: 8, category: "Invitations", amount: 10000, paid: 0 },
-  { id: 9, category: "Clothing & Jewellery", amount: 100000, paid: 0 },
-  { id: 10, category: "Miscellaneous", amount: 50000, paid: 0 },
-];
+// Budget Calculator — starts empty, user adds their own items
+const suggestedCategories = ["Venue", "Catering", "Photography", "Videography", "Decoration", "DJ & Music", "Bridal Makeup", "Invitations", "Clothing & Jewellery", "Miscellaneous"];
+
 
 // Checklist
 const defaultChecklist = [
@@ -52,7 +42,7 @@ const PlanningTools = () => {
   const [activeTool, setActiveTool] = useState("budget");
 
   // Budget state
-  const [budgetItems, setBudgetItems] = useState(defaultBudgetItems);
+  const [budgetItems, setBudgetItems] = useState<{id: number; category: string; amount: number; paid: number}[]>([]);
   const [newCategory, setNewCategory] = useState("");
   const [newAmount, setNewAmount] = useState("");
 
@@ -77,6 +67,10 @@ const PlanningTools = () => {
 
   const updatePaid = (id: number, paid: number) => {
     setBudgetItems(budgetItems.map((i) => (i.id === id ? { ...i, paid } : i)));
+  };
+
+  const updateAmount = (id: number, amount: number) => {
+    setBudgetItems(budgetItems.map((i) => (i.id === id ? { ...i, amount } : i)));
   };
 
   const removeBudgetItem = (id: number) => {
@@ -140,66 +134,101 @@ const PlanningTools = () => {
         {/* BUDGET PLANNER */}
         {activeTool === "budget" && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-            {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <div className="bg-card rounded-2xl border border-border/50 p-5">
-                <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1">Total Budget</p>
-                <p className="font-display text-2xl font-bold text-foreground">₹{totalBudget.toLocaleString("en-IN")}</p>
-              </div>
-              <div className="bg-card rounded-2xl border border-border/50 p-5">
-                <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1">Total Paid</p>
-                <p className="font-display text-2xl font-bold text-accent">₹{totalPaid.toLocaleString("en-IN")}</p>
-                <div className="mt-2 h-2 bg-secondary rounded-full overflow-hidden">
-                  <div className="h-full gradient-gold rounded-full transition-all" style={{ width: `${totalBudget > 0 ? (totalPaid / totalBudget) * 100 : 0}%` }} />
+
+            {/* Empty State */}
+            {budgetItems.length === 0 && (
+              <div className="bg-card rounded-2xl border border-border/50 p-8 text-center mb-8">
+                <Calculator className="w-10 h-10 text-accent mx-auto mb-3" />
+                <h3 className="font-display text-lg font-bold text-foreground mb-2">Start Your Budget</h3>
+                <p className="font-body text-sm text-muted-foreground mb-6 max-w-md mx-auto">
+                  Add your wedding expense categories below, or pick from common categories to get started.
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {suggestedCategories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setBudgetItems((prev) => [...prev, { id: Date.now() + Math.random(), category: cat, amount: 0, paid: 0 }]);
+                      }}
+                      className="px-3 py-1.5 rounded-full border border-accent/30 text-accent font-body text-xs font-semibold hover:bg-accent/10 transition-colors"
+                    >
+                      + {cat}
+                    </button>
+                  ))}
                 </div>
               </div>
-              <div className="gradient-wine-deep rounded-2xl p-5">
-                <p className="font-body text-xs text-primary-foreground/60 uppercase tracking-wider mb-1">Remaining</p>
-                <p className="font-display text-2xl font-bold text-primary-foreground">₹{remaining.toLocaleString("en-IN")}</p>
+            )}
+
+            {/* Summary Cards — only show when items exist */}
+            {budgetItems.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div className="bg-card rounded-2xl border border-border/50 p-5">
+                  <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1">Total Budget</p>
+                  <p className="font-display text-2xl font-bold text-foreground">₹{totalBudget.toLocaleString("en-IN")}</p>
+                </div>
+                <div className="bg-card rounded-2xl border border-border/50 p-5">
+                  <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1">Total Paid</p>
+                  <p className="font-display text-2xl font-bold text-accent">₹{totalPaid.toLocaleString("en-IN")}</p>
+                  <div className="mt-2 h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full gradient-gold rounded-full transition-all" style={{ width: `${totalBudget > 0 ? (totalPaid / totalBudget) * 100 : 0}%` }} />
+                  </div>
+                </div>
+                <div className="gradient-wine-deep rounded-2xl p-5">
+                  <p className="font-body text-xs text-primary-foreground/60 uppercase tracking-wider mb-1">Remaining</p>
+                  <p className="font-display text-2xl font-bold text-primary-foreground">₹{remaining.toLocaleString("en-IN")}</p>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Budget Items */}
-            <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
-              <div className="p-4 border-b border-border/30 grid grid-cols-12 gap-2 font-body text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                <span className="col-span-4">Category</span>
-                <span className="col-span-3">Estimated</span>
-                <span className="col-span-3">Paid</span>
-                <span className="col-span-2"></span>
+            {budgetItems.length > 0 && (
+              <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+                <div className="p-4 border-b border-border/30 grid grid-cols-12 gap-2 font-body text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <span className="col-span-4">Category</span>
+                  <span className="col-span-3">Estimated (₹)</span>
+                  <span className="col-span-3">Paid (₹)</span>
+                  <span className="col-span-2"></span>
+                </div>
+                {budgetItems.map((item) => (
+                  <div key={item.id} className="p-4 border-b border-border/30 grid grid-cols-12 gap-2 items-center">
+                    <span className="col-span-4 font-body text-sm font-semibold text-foreground">{item.category}</span>
+                    <div className="col-span-3">
+                      <input
+                        type="number"
+                        value={item.amount || ""}
+                        onChange={(e) => updateAmount(item.id, Number(e.target.value))}
+                        placeholder="Budget"
+                        className="w-full px-3 py-1.5 rounded-lg bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30"
+                      />
+                    </div>
+                    <div className="col-span-3">
+                      <input
+                        type="number"
+                        value={item.paid || ""}
+                        onChange={(e) => updatePaid(item.id, Number(e.target.value))}
+                        placeholder="Paid"
+                        className="w-full px-3 py-1.5 rounded-lg bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30"
+                      />
+                    </div>
+                    <div className="col-span-2 flex justify-end">
+                      <button onClick={() => removeBudgetItem(item.id)} className="text-muted-foreground hover:text-destructive transition-colors">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              {budgetItems.map((item) => (
-                <div key={item.id} className="p-4 border-b border-border/30 grid grid-cols-12 gap-2 items-center">
-                  <span className="col-span-4 font-body text-sm font-semibold text-foreground">{item.category}</span>
-                  <span className="col-span-3 font-body text-sm text-foreground">₹{item.amount.toLocaleString("en-IN")}</span>
-                  <div className="col-span-3">
-                    <input
-                      type="number"
-                      value={item.paid || ""}
-                      onChange={(e) => updatePaid(item.id, Number(e.target.value))}
-                      placeholder="0"
-                      className="w-full px-3 py-1.5 rounded-lg bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30"
-                    />
-                  </div>
-                  <div className="col-span-2 flex justify-end">
-                    <button onClick={() => removeBudgetItem(item.id)} className="text-muted-foreground hover:text-destructive transition-colors">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-              {/* Add New */}
-              <div className="p-4 grid grid-cols-12 gap-2 items-center bg-secondary/20">
-                <div className="col-span-4">
-                  <input value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="New category" className="w-full px-3 py-1.5 rounded-lg bg-background border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
-                </div>
-                <div className="col-span-3">
-                  <input value={newAmount} onChange={(e) => setNewAmount(e.target.value)} type="number" placeholder="Amount" className="w-full px-3 py-1.5 rounded-lg bg-background border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
-                </div>
-                <div className="col-span-5">
-                  <button onClick={addBudgetItem} className="flex items-center gap-1 gradient-gold text-accent-foreground px-4 py-1.5 rounded-lg text-sm font-body font-semibold hover:opacity-90 transition-opacity">
-                    <Plus className="w-4 h-4" /> Add
-                  </button>
-                </div>
+            )}
+
+            {/* Add New Item */}
+            <div className="mt-4 bg-card rounded-2xl border border-border/50 p-4">
+              <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-3">Add New Category</p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Category name" className="flex-1 px-3 py-2 rounded-lg bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
+                <input value={newAmount} onChange={(e) => setNewAmount(e.target.value)} type="number" placeholder="Estimated amount" className="sm:w-40 px-3 py-2 rounded-lg bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
+                <button onClick={addBudgetItem} className="flex items-center justify-center gap-1 gradient-gold text-accent-foreground px-5 py-2 rounded-lg text-sm font-body font-semibold hover:opacity-90 transition-opacity">
+                  <Plus className="w-4 h-4" /> Add
+                </button>
               </div>
             </div>
 
