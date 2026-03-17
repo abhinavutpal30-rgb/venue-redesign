@@ -85,7 +85,7 @@ const Navbar = () => {
 
         <div className="hidden lg:block">
           <button
-            onClick={() => scrollTo("cta")}
+            onClick={() => navigate("/list-your-venue")}
             className="gradient-gold text-accent-foreground font-body text-sm font-semibold px-6 py-2.5 rounded-full hover:opacity-90 transition-all shadow-gold hover:shadow-lg hover:scale-105 duration-300"
           >
             List Your Venue
@@ -119,7 +119,7 @@ const Navbar = () => {
                 </motion.button>
               ))}
               <button
-                onClick={() => { scrollTo("cta"); setIsOpen(false); }}
+                onClick={() => { navigate("/list-your-venue"); setIsOpen(false); }}
                 className="inline-block gradient-gold text-accent-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-full mt-3"
               >
                 List Your Venue
