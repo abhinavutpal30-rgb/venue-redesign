@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { MapPin, Users, Star, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface VenueCardProps {
+  id: string;
   name: string;
   image: string;
   price: string;
@@ -11,12 +13,15 @@ interface VenueCardProps {
   reviews: number;
 }
 
-const VenueCard = ({ name, image, price, address, capacity, rating, reviews }: VenueCardProps) => {
+const VenueCard = ({ id, name, image, price, address, capacity, rating, reviews }: VenueCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-elevated transition-all duration-500 border border-border/50"
+      className="group bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-elevated transition-all duration-500 border border-border/50 cursor-pointer"
+      onClick={() => navigate(`/venue/${id}`)}
     >
       <div className="relative h-56 overflow-hidden">
         <img
@@ -51,10 +56,10 @@ const VenueCard = ({ name, image, price, address, capacity, rating, reviews }: V
           <div className="flex items-center gap-1">
             <span className="text-xs text-muted-foreground font-body">{reviews} reviews</span>
           </div>
-          <button className="inline-flex items-center gap-1.5 text-sm font-body font-semibold text-primary hover:text-wine-light transition-colors group/btn">
+          <span className="inline-flex items-center gap-1.5 text-sm font-body font-semibold text-primary hover:text-wine-light transition-colors group/btn">
             View Details
             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-          </button>
+          </span>
         </div>
       </div>
     </motion.div>
