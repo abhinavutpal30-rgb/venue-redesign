@@ -11,6 +11,7 @@ import CompareVenues from "./pages/CompareVenues";
 import PlanningTools from "./pages/PlanningTools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ListYourVenue from "./pages/ListYourVenue";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
