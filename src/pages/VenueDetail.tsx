@@ -390,9 +390,91 @@ const VenueDetail = () => {
                 )}
               </motion.div>
             )}
-          </div>
 
-          {/* Sticky Sidebar */}
+            {/* Policies */}
+            {(activeTab === "Overview") && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-5">Venue Policies</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {policies.map((policy) => (
+                    <div key={policy.label} className="flex gap-3 p-4 bg-card rounded-xl border border-border/30">
+                      <policy.icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-body font-bold text-sm text-foreground mb-0.5">{policy.label}</p>
+                        <p className="font-body text-xs text-muted-foreground leading-relaxed">{policy.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Location Map */}
+            {(activeTab === "Overview") && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} id="map-section">
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-2">Location</h2>
+                <p className="font-body text-sm text-muted-foreground mb-4 flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-accent" /> Boring Road, Patna, Bihar 800001
+                </p>
+                <div className="rounded-2xl overflow-hidden border border-border/30 h-72">
+                  <iframe
+                    title="Venue Location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3597.5!2d85.1376!3d25.6093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDM2JzMzLjUiTiA4NcKwMDgnMTUuNCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=25.6093,85.1376"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-body font-semibold text-accent hover:underline"
+                >
+                  <Navigation className="w-4 h-4" /> Get Directions
+                </a>
+              </motion.div>
+            )}
+
+            {/* FAQ */}
+            {(activeTab === "Overview") && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground mb-5">
+                  <HelpCircle className="w-5 h-5 inline mr-2 text-accent" />
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-3">
+                  {faqs.map((faq, i) => (
+                    <div key={i} className="bg-card rounded-xl border border-border/30 overflow-hidden">
+                      <button
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        className="w-full flex items-center justify-between p-4 text-left"
+                      >
+                        <span className="font-body font-semibold text-sm text-foreground pr-4">{faq.q}</span>
+                        <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""}`} />
+                      </button>
+                      <AnimatePresence>
+                        {openFaq === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <p className="px-4 pb-4 font-body text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </div>
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-5">
               {/* Pricing Card */}
