@@ -369,6 +369,16 @@ const PlanningTools = () => {
                 <p className="font-body text-xs text-muted-foreground text-center italic">
                   * Estimates are approximate and based on average market rates in Patna & Kolkata. Actual costs may vary.
                 </p>
+
+                {/* Download Button */}
+                <div className="mt-4 flex justify-center">
+                  <button
+                    onClick={() => downloadGuestEstimatePdf(guestCount, mealType, estimatedCateringCost, estimatedVenueCost, estimatedDecorationCost, estimatedTotalCost)}
+                    className="flex items-center gap-2 gradient-wine-deep text-primary-foreground px-6 py-3 rounded-xl font-body font-semibold hover:opacity-90 transition-opacity shadow-elevated"
+                  >
+                    <Download className="w-5 h-5" /> Download Estimate as PDF
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
