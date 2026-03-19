@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Users, Star, ArrowRight, Phone, Shield, Clock, Award, ChevronDown, X, Sparkles } from "lucide-react";
+import { Search, MapPin, Users, Star, ArrowRight, Phone, Shield, Clock, Award, X, Sparkles, Camera, Palette, Heart, Flower2, ChevronRight, CheckCircle, BookOpen, Eye, CalendarCheck, UserCheck, Plus, Minus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import InquiryFormPopup from "@/components/InquiryFormPopup";
 import Footer from "@/components/Footer";
@@ -16,12 +16,61 @@ const patnaVenues = [
   { id: "shagun-garden", name: "Shagun Garden", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600", price: "₹45,000", priceLabel: "onwards", address: "Kankarbagh, Patna", capacity: "200-600", rating: 4.3, reviews: 45, type: "Lawn", veg: true, featured: false },
 ];
 
+const venueCategories = [
+  { label: "Banquet Halls", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300", type: "Banquet Hall" },
+  { label: "Marriage Halls", image: "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=300", type: "Banquet Hall" },
+  { label: "Hotels", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300", type: "Hotel" },
+  { label: "Resorts", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300", type: "Resort" },
+  { label: "Party Lawns", image: "https://images.unsplash.com/photo-1478146059778-26028b07395a?w=300", type: "Lawn" },
+];
+
 const venueTypes = ["All", "Banquet Hall", "Hotel", "Resort", "Lawn"];
 const budgetRanges = [
   { label: "All Budgets", value: "all" },
   { label: "Under ₹1L", value: "under1" },
   { label: "₹1L - ₹2L", value: "1to2" },
   { label: "₹2L+", value: "above2" },
+];
+
+const blogs = [
+  { title: "Top 10 Wedding Trends in Patna 2025", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400", date: "Mar 15, 2025" },
+  { title: "How to Choose the Perfect Wedding Venue", image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400", date: "Mar 10, 2025" },
+  { title: "Budget Wedding Planning Tips", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400", date: "Mar 5, 2025" },
+];
+
+const realWeddings = [
+  { names: "Priya & Rahul", venue: "The Grand Palace", image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400" },
+  { names: "Anjali & Vikram", venue: "Royal Heritage Resort", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400" },
+  { names: "Sneha & Amit", venue: "The Vedic Resort", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400" },
+];
+
+const vendors = [
+  { label: "Photographers", icon: Camera, count: 45 },
+  { label: "Makeup Artists", icon: Palette, count: 32 },
+  { label: "Mehendi Artists", icon: Flower2, count: 28 },
+  { label: "Decorators", icon: Sparkles, count: 38 },
+];
+
+const howItWorks = [
+  { step: 1, title: "Discover & Shortlist Venues", desc: "Input your requirements & see our recommendations & prices.", icon: Eye },
+  { step: 2, title: "Guided Visits", desc: "Visit venues on your own or with our venue expert.", icon: CalendarCheck },
+  { step: 3, title: "Book Venue", desc: "Get final quotes (upto 30% off) and book your venue.", icon: BookOpen },
+  { step: 4, title: "Book Vendors", desc: "Meet our trusted vendors and book them at your ease.", icon: UserCheck },
+];
+
+const whyBookReasons = [
+  { title: "Delivery of Commitments", desc: "Our team ensures that all the services are delivered as committed to ensure a hassle-free experience for you." },
+  { title: "One-Stop Shop", desc: "No need to run around for your wedding services - Book our trusted vendors under one roof." },
+  { title: "Guaranteed Best Prices", desc: "We guarantee our prices for venue and non-venue services. Upto 30% off." },
+];
+
+const faqs = [
+  { q: "What is Venue by Choice?", a: "Venue by Choice is a wedding venue discovery and booking platform. We help couples and families explore, compare, and book banquet halls, lawns, and resorts across Kolkata and Patna — easily, quickly, and all in one place." },
+  { q: "Is there any cost to use Venue by Choice?", a: "No, it's completely free for users. You can browse, filter, check venue availability, request callbacks, and compare venues — all without paying anything to us." },
+  { q: "Which locations does Venue by Choice cover?", a: "We currently focus on Patna, Kolkata, and surrounding regions. We are adding more cities soon." },
+  { q: "Can I find venues by my guest count and budget?", a: "Yes! Just enter your estimated guest count and budget in the filters. Our listings will adjust to show venues that can handle your event size and fall within your price range." },
+  { q: "Can I get help after I book the venue?", a: "Yes! Even after you book, our support team is here to help with follow-ups, changes, or clarifying any doubts. We're with you till your big day." },
+  { q: "Why should I use Venue by Choice instead of calling venues directly?", a: "With Venue by Choice, you get verified information, photos, FAQs, filters, and quick availability updates all in one place." },
 ];
 
 const PatnaVenues = () => {
@@ -33,8 +82,8 @@ const PatnaVenues = () => {
   const [selectedVenue, setSelectedVenue] = useState<string | undefined>(undefined);
   const [showExitPopup, setShowExitPopup] = useState(false);
   const [exitShown, setExitShown] = useState(false);
+  const [faqOpen, setFaqOpen] = useState<number | null>(0);
 
-  // Exit-intent popup (desktop) & scroll-triggered (mobile)
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !exitShown) {
@@ -43,19 +92,10 @@ const PatnaVenues = () => {
       }
     };
     document.addEventListener("mouseleave", handleMouseLeave);
-
-    // Auto-show inquiry after 15s for engagement
     const timer = setTimeout(() => {
-      if (!exitShown) {
-        setShowExitPopup(true);
-        setExitShown(true);
-      }
+      if (!exitShown) { setShowExitPopup(true); setExitShown(true); }
     }, 15000);
-
-    return () => {
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      clearTimeout(timer);
-    };
+    return () => { document.removeEventListener("mouseleave", handleMouseLeave); clearTimeout(timer); };
   }, [exitShown]);
 
   const getBudgetValue = (price: string) => {
@@ -79,7 +119,7 @@ const PatnaVenues = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Slim Header / Nav */}
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 glass shadow-elevated border-b border-border/30">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
           <button onClick={() => navigate("/")} className="font-display text-lg font-bold">
@@ -101,7 +141,7 @@ const PatnaVenues = () => {
         </div>
       </header>
 
-      {/* Hero - Compact, Conversion Focused */}
+      {/* Hero */}
       <section className="relative pt-20 pb-6 md:pt-24 md:pb-10 px-4 overflow-hidden">
         <div className="absolute inset-0 gradient-wine-deep opacity-95" />
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, hsl(38 70% 55%), transparent 50%)" }} />
@@ -115,14 +155,7 @@ const PatnaVenues = () => {
               Compare prices, check availability & book the perfect venue for your dream wedding.
             </p>
           </motion.div>
-
-          {/* Trust Signals */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-primary-foreground/70"
-          >
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-primary-foreground/70">
             {[
               { icon: Shield, text: "Best Price Guarantee" },
               { icon: Clock, text: "Instant Availability" },
@@ -137,55 +170,60 @@ const PatnaVenues = () => {
         </div>
       </section>
 
-      {/* Sticky Inquiry Bar (constant form strip) */}
-      <section className="sticky top-[52px] z-40 bg-card border-b border-border/50 shadow-md">
+      {/* Browse by Venue Categories */}
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">Browse by Venue Categories</h2>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+          {venueCategories.map((cat) => (
+            <motion.button
+              key={cat.label}
+              whileHover={{ y: -4 }}
+              onClick={() => setType(cat.type)}
+              className={`shrink-0 w-36 md:w-44 rounded-2xl overflow-hidden border transition-all duration-300 ${type === cat.type ? "border-accent shadow-gold" : "border-border/50 hover:border-accent/30"}`}
+            >
+              <div className="h-24 md:h-28 overflow-hidden">
+                <img src={cat.image} alt={cat.label} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-3 bg-card">
+                <p className="font-body text-sm font-semibold text-foreground text-center">{cat.label}</p>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </section>
+
+      {/* Sticky Filter Bar */}
+      <section className="sticky top-[52px] z-40 bg-card border-y border-border/50 shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center gap-3">
           <div className="flex-1 w-full md:w-auto relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by venue name or area..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30"
-            />
+            <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by venue name or area..." className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
           </div>
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]"
-            >
-              {venueTypes.map((t) => (
-                <option key={t} value={t}>{t === "All" ? "All Types" : t}</option>
-              ))}
+            <select value={type} onChange={(e) => setType(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]">
+              {venueTypes.map((t) => (<option key={t} value={t}>{t === "All" ? "All Types" : t}</option>))}
             </select>
-            <select
-              value={budget}
-              onChange={(e) => setBudget(e.target.value)}
-              className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]"
-            >
-              {budgetRanges.map((b) => (
-                <option key={b.value} value={b.value}>{b.label}</option>
-              ))}
+            <select value={budget} onChange={(e) => setBudget(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]">
+              {budgetRanges.map((b) => (<option key={b.value} value={b.value}>{b.label}</option>))}
             </select>
           </div>
-          <button
-            onClick={() => openInquiry()}
-            className="hidden md:flex gradient-wine text-primary-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all items-center gap-2 whitespace-nowrap"
-          >
-            <Sparkles className="w-4 h-4" />
-            Get Expert Help
+          <button onClick={() => openInquiry()} className="hidden md:flex gradient-wine text-primary-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all items-center gap-2 whitespace-nowrap">
+            <Sparkles className="w-4 h-4" /> Get Expert Help
           </button>
         </div>
       </section>
 
-      {/* Venue Listing */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
+      {/* Popular Wedding Venues - Grid Layout */}
+      <section className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-6">
-          <p className="font-body text-sm text-muted-foreground">
-            Showing <span className="font-semibold text-foreground">{filtered.length}</span> venues in Patna
-          </p>
+          <div>
+            <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">Popular Wedding Venues</h2>
+            <p className="font-body text-sm text-muted-foreground mt-1">
+              Showing <span className="font-semibold text-foreground">{filtered.length}</span> venues in Patna
+            </p>
+          </div>
           {(type !== "All" || budget !== "all" || search) && (
             <button onClick={() => { setType("All"); setBudget("all"); setSearch(""); }} className="flex items-center gap-1 text-sm font-body text-wine hover:text-wine-light transition-colors">
               <X className="w-3.5 h-3.5" /> Clear
@@ -194,76 +232,51 @@ const PatnaVenues = () => {
         </div>
 
         {filtered.length > 0 ? (
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filtered.map((venue, i) => (
               <motion.div
                 key={venue.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
-                className="group bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-elevated transition-all duration-300 border border-border/50 flex flex-col md:flex-row"
+                whileHover={{ y: -6 }}
+                className="group bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-elevated transition-all duration-300 border border-border/50"
               >
-                {/* Image */}
-                <div className="relative w-full md:w-72 lg:w-80 h-52 md:h-auto shrink-0 overflow-hidden cursor-pointer" onClick={() => navigate(`/venue/${venue.id}`)}>
-                  <img src={venue.image} alt={venue.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="relative h-40 md:h-48 overflow-hidden cursor-pointer" onClick={() => navigate(`/venue/${venue.id}`)}>
+                  <img src={venue.image} alt={venue.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   {venue.featured && (
-                    <span className="absolute top-3 left-3 gradient-gold text-accent-foreground font-body text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Featured</span>
+                    <span className="absolute top-2 left-2 gradient-gold text-accent-foreground font-body text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Featured</span>
                   )}
-                  <div className="absolute top-3 right-3 glass rounded-lg px-2 py-1 flex items-center gap-1">
+                  <div className="absolute top-2 right-2 glass rounded-lg px-1.5 py-0.5 flex items-center gap-1">
                     <Star className="w-3 h-3 fill-gold text-gold" />
-                    <span className="text-xs font-bold font-body text-foreground">{venue.rating}</span>
+                    <span className="text-[10px] font-bold font-body text-foreground">{venue.rating}</span>
+                  </div>
+                  <div className="absolute bottom-2 right-2 glass rounded-lg px-2 py-1">
+                    <span className="text-xs font-bold font-body text-foreground">{venue.price}</span>
                   </div>
                 </div>
 
-                {/* Info */}
-                <div className="flex-1 p-5 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <div>
-                        <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-primary transition-colors cursor-pointer" onClick={() => navigate(`/venue/${venue.id}`)}>
-                          {venue.name}
-                        </h3>
-                        <div className="flex items-center gap-1.5 mt-1">
-                          <MapPin className="w-3.5 h-3.5 text-accent" />
-                          <span className="font-body text-sm text-muted-foreground">{venue.address}</span>
-                        </div>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <p className="font-display text-lg font-bold text-foreground">{venue.price}</p>
-                        <p className="font-body text-[11px] text-muted-foreground">{venue.priceLabel}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3 mt-3">
-                      <span className="inline-flex items-center gap-1 bg-secondary/60 rounded-lg px-2.5 py-1 font-body text-xs text-muted-foreground">
-                        <Users className="w-3 h-3" /> {venue.capacity} guests
-                      </span>
-                      <span className="inline-flex items-center bg-secondary/60 rounded-lg px-2.5 py-1 font-body text-xs text-muted-foreground">
-                        {venue.type}
-                      </span>
-                      {venue.veg && (
-                        <span className="inline-flex items-center bg-accent/10 text-accent-foreground rounded-lg px-2.5 py-1 font-body text-xs font-medium">
-                          Veg Available
-                        </span>
-                      )}
-                      <span className="font-body text-xs text-muted-foreground">{venue.reviews} reviews</span>
-                    </div>
+                <div className="p-3 md:p-4">
+                  <h3 className="font-display text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors cursor-pointer line-clamp-1" onClick={() => navigate(`/venue/${venue.id}`)}>
+                    {venue.name}
+                  </h3>
+                  <div className="flex items-center gap-1 mt-1.5">
+                    <MapPin className="w-3 h-3 text-accent shrink-0" />
+                    <span className="font-body text-xs text-muted-foreground line-clamp-1">{venue.address}</span>
                   </div>
-
-                  <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border/50">
-                    <button
-                      onClick={() => openInquiry(venue.name)}
-                      className="flex-1 gradient-gold text-accent-foreground font-body text-sm font-semibold py-2.5 rounded-xl hover:opacity-90 transition-all shadow-gold text-center"
-                    >
-                      Send Enquiry
-                    </button>
-                    <button
-                      onClick={() => navigate(`/venue/${venue.id}`)}
-                      className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-border hover:bg-secondary/50 font-body text-sm text-foreground transition-colors"
-                    >
-                      View <ArrowRight className="w-4 h-4" />
-                    </button>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="inline-flex items-center gap-1 bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
+                      <Users className="w-2.5 h-2.5" /> {venue.capacity}
+                    </span>
+                    <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">{venue.type}</span>
                   </div>
+                  <button
+                    onClick={() => openInquiry(venue.name)}
+                    className="w-full mt-3 gradient-gold text-accent-foreground font-body text-xs font-semibold py-2 rounded-lg hover:opacity-90 transition-all shadow-gold text-center"
+                  >
+                    Send Enquiry
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -275,9 +288,173 @@ const PatnaVenues = () => {
             <p className="font-body text-muted-foreground text-sm">Try adjusting your search or filters.</p>
           </div>
         )}
+
+        <div className="text-center mt-8">
+          <button onClick={() => navigate("/venues")} className="inline-flex items-center gap-2 font-body text-sm font-semibold text-wine hover:text-wine-light transition-colors">
+            View all Venues <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </section>
 
-      {/* Constant bottom inquiry bar (mobile) */}
+      {/* Latest Blogs on Weddings */}
+      <section className="max-w-7xl mx-auto px-4 py-12 border-t border-border/30">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">Latest Blogs On Weddings</h2>
+          <button className="flex items-center gap-1 font-body text-sm font-semibold text-wine hover:text-wine-light transition-colors">See all <ChevronRight className="w-4 h-4" /></button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {blogs.map((blog, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-elevated transition-all cursor-pointer">
+              <div className="h-44 overflow-hidden">
+                <img src={blog.image} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-4">
+                <p className="font-body text-xs text-muted-foreground mb-2">{blog.date}</p>
+                <h3 className="font-display text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">{blog.title}</h3>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Real Weddings */}
+      <section className="max-w-7xl mx-auto px-4 py-12 border-t border-border/30">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">Real Weddings</h2>
+          <button className="flex items-center gap-1 font-body text-sm font-semibold text-wine hover:text-wine-light transition-colors">See all <ChevronRight className="w-4 h-4" /></button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {realWeddings.map((w, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group relative rounded-2xl overflow-hidden h-64 cursor-pointer">
+              <img src={w.image} alt={w.names} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Heart className="w-4 h-4 text-gold fill-gold" />
+                  <p className="font-display text-base font-bold text-primary-foreground">{w.names}</p>
+                </div>
+                <p className="font-body text-xs text-primary-foreground/70">{w.venue}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Explore Vendors */}
+      <section className="max-w-7xl mx-auto px-4 py-12 border-t border-border/30">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">Explore Vendors</h2>
+          <button className="flex items-center gap-1 font-body text-sm font-semibold text-wine hover:text-wine-light transition-colors">See all <ChevronRight className="w-4 h-4" /></button>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {vendors.map(({ label, icon: Icon, count }, i) => (
+            <motion.div key={label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} whileHover={{ y: -4 }} className="bg-card rounded-2xl border border-border/50 p-6 text-center hover:shadow-elevated hover:border-accent/30 transition-all cursor-pointer">
+              <div className="w-14 h-14 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-3">
+                <Icon className="w-7 h-7 text-accent" />
+              </div>
+              <h3 className="font-display text-sm font-semibold text-foreground mb-1">{label}</h3>
+              <p className="font-body text-xs text-muted-foreground">{count}+ in Patna</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-16 px-4 gradient-wine-deep relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 80% 30%, hsl(38 70% 55%), transparent 50%)" }} />
+        <div className="max-w-5xl mx-auto relative">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="font-display text-2xl md:text-3xl font-bold text-primary-foreground text-center mb-12">
+            How it <span className="text-gradient-gold">Works</span>
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {howItWorks.map(({ step, title, desc, icon: Icon }, i) => (
+              <motion.div key={step} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }} className="text-center relative">
+                <div className="w-16 h-16 mx-auto rounded-full gradient-gold flex items-center justify-center mb-4 shadow-gold">
+                  <Icon className="w-7 h-7 text-accent-foreground" />
+                </div>
+                <div className="absolute top-8 left-[60%] hidden md:block w-[calc(100%-2rem)] h-px bg-gold-light/30" style={{ display: i === 3 ? "none" : undefined }} />
+                <h3 className="font-display text-sm font-bold text-primary-foreground mb-2">{title}</h3>
+                <p className="font-body text-xs text-primary-foreground/50 leading-relaxed">{desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Book With Us */}
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="font-display text-2xl md:text-3xl font-bold text-foreground text-center mb-12">
+          Why book with <span className="text-gradient-gold">Venue by Choice</span>
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {whyBookReasons.map(({ title, desc }, i) => (
+            <motion.div key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="bg-card rounded-2xl border border-border/50 p-8 text-center hover:shadow-elevated hover:border-accent/30 transition-all">
+              <div className="w-12 h-12 mx-auto rounded-full gradient-gold flex items-center justify-center mb-4 shadow-gold">
+                <CheckCircle className="w-6 h-6 text-accent-foreground" />
+              </div>
+              <h3 className="font-display text-base font-bold text-foreground mb-3">{title}</h3>
+              <p className="font-body text-sm text-muted-foreground leading-relaxed">{desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Wedding Photos / Your Wedding Website */}
+      <section className="max-w-7xl mx-auto px-4 py-12 border-t border-border/30">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-card rounded-2xl border border-border/50 p-8 flex flex-col justify-center">
+            <h3 className="font-display text-xl font-bold text-foreground mb-3">Wedding Photos</h3>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">
+              Manage your guests and keep them updated real time. Don't miss out on a single moment captured by everyone & cherish them forever!
+            </p>
+            <button onClick={() => openInquiry()} className="self-start gradient-gold text-accent-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-full hover:opacity-90 transition-all shadow-gold">
+              Learn More
+            </button>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bg-card rounded-2xl border border-border/50 p-8 flex flex-col justify-center">
+            <h3 className="font-display text-xl font-bold text-foreground mb-3">Your Wedding Website</h3>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">
+              Create a buzz of your wedding much before the wedding day. Let the guests get to know each other even before they come to the wedding.
+            </p>
+            <button onClick={() => openInquiry()} className="self-start gradient-gold text-accent-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-full hover:opacity-90 transition-all shadow-gold">
+              Learn More
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="max-w-3xl mx-auto px-4 py-16">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+          <p className="text-gold font-body text-sm tracking-[0.3em] uppercase mb-3">Got Questions?</p>
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+            Frequently Asked <span className="text-gradient-gold">Questions</span>
+          </h2>
+        </motion.div>
+        <div className="space-y-3">
+          {faqs.map((faq, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className={`bg-card rounded-2xl border overflow-hidden transition-all duration-300 ${faqOpen === i ? "border-accent/30 shadow-gold" : "border-border/50"}`}>
+              <button onClick={() => setFaqOpen(faqOpen === i ? null : i)} className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left">
+                <span className="font-display font-semibold text-sm text-foreground">{faq.q}</span>
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${faqOpen === i ? "gradient-gold" : "bg-secondary"}`}>
+                  {faqOpen === i ? <Minus className="w-3.5 h-3.5 text-accent-foreground" /> : <Plus className="w-3.5 h-3.5 text-muted-foreground" />}
+                </div>
+              </button>
+              <AnimatePresence>
+                {faqOpen === i && (
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}>
+                    <div className="px-6 pb-5">
+                      <p className="text-muted-foreground font-body text-sm leading-relaxed">{faq.a}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Mobile bottom CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden glass border-t border-border/50 shadow-elevated px-4 py-3 flex items-center gap-3">
         <button onClick={() => openInquiry()} className="flex-1 gradient-gold text-accent-foreground font-body text-sm font-bold py-3 rounded-xl shadow-gold text-center">
           Get Free Quotes
@@ -286,16 +463,11 @@ const PatnaVenues = () => {
           <Phone className="w-5 h-5" />
         </a>
       </div>
-
-      {/* Bottom spacer for mobile CTA */}
       <div className="h-20 md:hidden" />
 
       <Footer />
 
-      {/* Inquiry Popup */}
       <InquiryFormPopup open={inquiryOpen} onClose={() => setInquiryOpen(false)} venueName={selectedVenue} />
-
-      {/* Exit-Intent / Timed Popup */}
       <InquiryFormPopup open={showExitPopup && !inquiryOpen} onClose={() => setShowExitPopup(false)} />
     </div>
   );
