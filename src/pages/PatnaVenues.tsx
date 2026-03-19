@@ -251,22 +251,64 @@ const PatnaVenues = () => {
 
       {/* Sticky Filter Bar */}
       <section className="sticky top-[52px] z-40 bg-card border-y border-border/50 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center gap-3">
-          <div className="flex-1 w-full md:w-auto relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by venue name or area..." className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          {/* Row 1: Search + primary filters */}
+          <div className="flex flex-col md:flex-row items-center gap-3">
+            <div className="flex-1 w-full md:w-auto relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by venue name or area..." className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
+            </div>
+            <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+              <select value={locality} onChange={(e) => setLocality(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[120px]">
+                {localities.map((l) => (<option key={l} value={l}>{l === "All" ? "All Localities" : l}</option>))}
+              </select>
+              <select value={type} onChange={(e) => setType(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[120px]">
+                {venueTypes.map((t) => (<option key={t} value={t}>{t === "All" ? "Venue Type" : t}</option>))}
+              </select>
+              <select value={guests} onChange={(e) => setGuests(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[120px]">
+                {guestRanges.map((g) => (<option key={g.value} value={g.value}>{g.label}</option>))}
+              </select>
+              <button onClick={() => setShowMoreFilters(!showMoreFilters)} className={`flex items-center gap-1.5 px-3 py-2.5 rounded-xl border font-body text-sm transition-all whitespace-nowrap ${showMoreFilters || activeFilterCount > 3 ? "border-accent bg-accent/10 text-accent-foreground" : "border-border/50 bg-secondary/50 text-foreground"}`}>
+                <SlidersHorizontal className="w-4 h-4" />
+                More Filters
+                {activeFilterCount > 3 && <span className="w-5 h-5 rounded-full gradient-gold text-accent-foreground text-[10px] font-bold flex items-center justify-center">{activeFilterCount - 3}</span>}
+              </button>
+            </div>
+            <button onClick={() => openInquiry()} className="hidden md:flex gradient-wine text-primary-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all items-center gap-2 whitespace-nowrap">
+              <Sparkles className="w-4 h-4" /> Get Expert Help
+            </button>
           </div>
-          <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-            <select value={type} onChange={(e) => setType(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]">
-              {venueTypes.map((t) => (<option key={t} value={t}>{t === "All" ? "All Types" : t}</option>))}
-            </select>
-            <select value={budget} onChange={(e) => setBudget(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]">
-              {budgetRanges.map((b) => (<option key={b.value} value={b.value}>{b.label}</option>))}
-            </select>
-          </div>
-          <button onClick={() => openInquiry()} className="hidden md:flex gradient-wine text-primary-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all items-center gap-2 whitespace-nowrap">
-            <Sparkles className="w-4 h-4" /> Get Expert Help
-          </button>
+
+          {/* Row 2: Extended filters (collapsible) */}
+          <AnimatePresence>
+            {showMoreFilters && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 pt-3 mt-3 border-t border-border/30">
+                  <select value={roomFilter} onChange={(e) => setRoomFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {roomOptions.map((r) => (<option key={r.value} value={r.value}>{r.label}</option>))}
+                  </select>
+                  <select value={plateFilter} onChange={(e) => setPlateFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {plateRanges.map((p) => (<option key={p.value} value={p.value}>{p.label}</option>))}
+                  </select>
+                  <select value={rentalFilter} onChange={(e) => setRentalFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {rentalRanges.map((r) => (<option key={r.value} value={r.value}>{r.label}</option>))}
+                  </select>
+                  <select value={spaceFilter} onChange={(e) => setSpaceFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {spaceOptions.map((s) => (<option key={s} value={s}>{s === "All" ? "All Spaces" : s}</option>))}
+                  </select>
+                  <select value={ratingFilter} onChange={(e) => setRatingFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {ratingOptions.map((r) => (<option key={r.value} value={r.value}>{r.label}</option>))}
+                  </select>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
@@ -279,9 +321,9 @@ const PatnaVenues = () => {
               Showing <span className="font-semibold text-foreground">{filtered.length}</span> venues in Patna
             </p>
           </div>
-          {(type !== "All" || budget !== "all" || search) && (
-            <button onClick={() => { setType("All"); setBudget("all"); setSearch(""); }} className="flex items-center gap-1 text-sm font-body text-wine hover:text-wine-light transition-colors">
-              <X className="w-3.5 h-3.5" /> Clear
+          {activeFilterCount > 0 && (
+            <button onClick={() => { setType("All"); setLocality("All"); setGuests("all"); setRoomFilter("all"); setPlateFilter("all"); setRentalFilter("all"); setSpaceFilter("All"); setRatingFilter("all"); setSearch(""); }} className="flex items-center gap-1 text-sm font-body text-wine hover:text-wine-light transition-colors">
+              <X className="w-3.5 h-3.5" /> Clear all ({activeFilterCount})
             </button>
           )}
         </div>
