@@ -25,11 +25,37 @@ const venueCategories = [
 ];
 
 const venueTypes = ["All", "Banquet Hall", "Hotel", "Resort", "Lawn"];
-const budgetRanges = [
-  { label: "All Budgets", value: "all" },
+const localities = ["All", "Boring Road", "NH-30", "Fraser Road", "Rajgir Road", "Beer Chand Patel Marg", "Bailey Road", "Exhibition Road", "Kankarbagh"];
+const guestRanges = [
+  { label: "Any Guests", value: "all" },
+  { label: "Up to 200", value: "200" },
+  { label: "200 - 500", value: "500" },
+  { label: "500 - 1000", value: "1000" },
+  { label: "1000+", value: "1000+" },
+];
+const roomOptions = [
+  { label: "Any Rooms", value: "all" },
+  { label: "No Rooms", value: "0" },
+  { label: "1 - 50", value: "50" },
+  { label: "50+", value: "50+" },
+];
+const plateRanges = [
+  { label: "Any Price/Plate", value: "all" },
+  { label: "Under ₹800", value: "under800" },
+  { label: "₹800 - ₹1200", value: "800to1200" },
+  { label: "₹1200+", value: "1200+" },
+];
+const rentalRanges = [
+  { label: "Any Rental", value: "all" },
   { label: "Under ₹1L", value: "under1" },
   { label: "₹1L - ₹2L", value: "1to2" },
   { label: "₹2L+", value: "above2" },
+];
+const spaceOptions = ["All", "Indoor", "Outdoor", "Both"];
+const ratingOptions = [
+  { label: "Any Rating", value: "all" },
+  { label: "4.5+", value: "4.5" },
+  { label: "4.0+", value: "4.0" },
 ];
 
 const blogs = [
