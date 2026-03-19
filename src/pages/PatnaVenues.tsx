@@ -103,12 +103,19 @@ const PatnaVenues = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [type, setType] = useState("All");
-  const [budget, setBudget] = useState("all");
+  const [locality, setLocality] = useState("All");
+  const [guests, setGuests] = useState("all");
+  const [roomFilter, setRoomFilter] = useState("all");
+  const [plateFilter, setPlateFilter] = useState("all");
+  const [rentalFilter, setRentalFilter] = useState("all");
+  const [spaceFilter, setSpaceFilter] = useState("All");
+  const [ratingFilter, setRatingFilter] = useState("all");
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [selectedVenue, setSelectedVenue] = useState<string | undefined>(undefined);
   const [showExitPopup, setShowExitPopup] = useState(false);
   const [exitShown, setExitShown] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(0);
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -124,19 +131,41 @@ const PatnaVenues = () => {
     return () => { document.removeEventListener("mouseleave", handleMouseLeave); clearTimeout(timer); };
   }, [exitShown]);
 
-  const getBudgetValue = (price: string) => {
-    const num = parseInt(price.replace(/[₹,]/g, ""));
-    if (num < 100000) return "under1";
-    if (num <= 200000) return "1to2";
-    return "above2";
-  };
-
   const filtered = patnaVenues.filter((v) => {
     if (type !== "All" && v.type !== type) return false;
-    if (budget !== "all" && getBudgetValue(v.price) !== budget) return false;
+    if (locality !== "All" && v.locality !== locality) return false;
+    if (spaceFilter !== "All" && v.space !== spaceFilter) return false;
     if (search && !v.name.toLowerCase().includes(search.toLowerCase()) && !v.address.toLowerCase().includes(search.toLowerCase())) return false;
+
+    // Guests
+    if (guests === "200") { if (v.capacityMax > 200) return false; }
+    else if (guests === "500") { if (v.capacityMin > 500 || v.capacityMax < 200) return false; }
+    else if (guests === "1000") { if (v.capacityMin > 1000 || v.capacityMax < 500) return false; }
+    else if (guests === "1000+") { if (v.capacityMax < 1000) return false; }
+
+    // Rooms
+    if (roomFilter === "0") { if (v.rooms !== 0) return false; }
+    else if (roomFilter === "50") { if (v.rooms === 0 || v.rooms > 50) return false; }
+    else if (roomFilter === "50+") { if (v.rooms < 50) return false; }
+
+    // Price per plate
+    if (plateFilter === "under800") { if (v.pricePerPlate >= 800) return false; }
+    else if (plateFilter === "800to1200") { if (v.pricePerPlate < 800 || v.pricePerPlate > 1200) return false; }
+    else if (plateFilter === "1200+") { if (v.pricePerPlate < 1200) return false; }
+
+    // Rental cost
+    if (rentalFilter === "under1") { if (v.rentalCost >= 100000) return false; }
+    else if (rentalFilter === "1to2") { if (v.rentalCost < 100000 || v.rentalCost > 200000) return false; }
+    else if (rentalFilter === "above2") { if (v.rentalCost < 200000) return false; }
+
+    // Rating
+    if (ratingFilter === "4.5") { if (v.rating < 4.5) return false; }
+    else if (ratingFilter === "4.0") { if (v.rating < 4.0) return false; }
+
     return true;
   });
+
+  const activeFilterCount = [type !== "All", locality !== "All", guests !== "all", roomFilter !== "all", plateFilter !== "all", rentalFilter !== "all", spaceFilter !== "All", ratingFilter !== "all", !!search].filter(Boolean).length;
 
   const openInquiry = (venueName?: string) => {
     setSelectedVenue(venueName);
