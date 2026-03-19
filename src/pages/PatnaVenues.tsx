@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Users, Star, ArrowRight, Phone, Shield, Clock, Award, X, Sparkles, Camera, Palette, Heart, Flower2, ChevronRight, CheckCircle, BookOpen, Eye, CalendarCheck, UserCheck, Plus, Minus } from "lucide-react";
+import { Search, MapPin, Users, Star, ArrowRight, Phone, Shield, Clock, Award, X, Sparkles, Camera, Palette, Heart, Flower2, ChevronRight, CheckCircle, BookOpen, Eye, CalendarCheck, UserCheck, Plus, Minus, SlidersHorizontal, BedDouble, Utensils, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import InquiryFormPopup from "@/components/InquiryFormPopup";
 import Footer from "@/components/Footer";
 
 const patnaVenues = [
-  { id: "the-grand-palace", name: "The Grand Palace", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600", price: "₹1,50,000", priceLabel: "onwards", address: "Boring Road, Patna", capacity: "200-800", rating: 4.8, reviews: 124, type: "Banquet Hall", veg: true, featured: true },
-  { id: "royal-heritage-resort", name: "Royal Heritage Resort", image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600", price: "₹2,00,000", priceLabel: "onwards", address: "NH-30, Patna", capacity: "500-1500", rating: 4.9, reviews: 89, type: "Resort", veg: false, featured: true },
-  { id: "majestic-banquets", name: "Majestic Banquets", image: "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600", price: "₹80,000", priceLabel: "onwards", address: "Fraser Road, Patna", capacity: "100-400", rating: 4.6, reviews: 56, type: "Banquet Hall", veg: true, featured: false },
-  { id: "the-vedic-resort", name: "The Vedic Resort", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600", price: "₹3,00,000", priceLabel: "onwards", address: "Rajgir Road, Patna", capacity: "300-1000", rating: 4.7, reviews: 67, type: "Resort", veg: false, featured: true },
-  { id: "patna-marriott", name: "Hotel Chanakya", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600", price: "₹1,80,000", priceLabel: "onwards", address: "Beer Chand Patel Marg, Patna", capacity: "150-600", rating: 4.5, reviews: 98, type: "Hotel", veg: false, featured: false },
-  { id: "rajdhani-lawn", name: "Rajdhani Party Lawn", image: "https://images.unsplash.com/photo-1478146059778-26028b07395a?w=600", price: "₹60,000", priceLabel: "onwards", address: "Bailey Road, Patna", capacity: "200-800", rating: 4.4, reviews: 72, type: "Lawn", veg: true, featured: false },
-  { id: "lemon-tree-patna", name: "Lemon Tree Hotel", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600", price: "₹1,20,000", priceLabel: "onwards", address: "Exhibition Road, Patna", capacity: "100-350", rating: 4.6, reviews: 83, type: "Hotel", veg: false, featured: false },
-  { id: "shagun-garden", name: "Shagun Garden", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600", price: "₹45,000", priceLabel: "onwards", address: "Kankarbagh, Patna", capacity: "200-600", rating: 4.3, reviews: 45, type: "Lawn", veg: true, featured: false },
+  { id: "the-grand-palace", name: "The Grand Palace", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600", price: "₹1,50,000", priceLabel: "onwards", address: "Boring Road, Patna", locality: "Boring Road", capacity: "200-800", capacityMin: 200, capacityMax: 800, rating: 4.8, reviews: 124, type: "Banquet Hall", space: "Indoor", rooms: 0, pricePerPlate: 1200, rentalCost: 150000, veg: true, featured: true },
+  { id: "royal-heritage-resort", name: "Royal Heritage Resort", image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600", price: "₹2,00,000", priceLabel: "onwards", address: "NH-30, Patna", locality: "NH-30", capacity: "500-1500", capacityMin: 500, capacityMax: 1500, rating: 4.9, reviews: 89, type: "Resort", space: "Both", rooms: 45, pricePerPlate: 1500, rentalCost: 200000, veg: false, featured: true },
+  { id: "majestic-banquets", name: "Majestic Banquets", image: "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600", price: "₹80,000", priceLabel: "onwards", address: "Fraser Road, Patna", locality: "Fraser Road", capacity: "100-400", capacityMin: 100, capacityMax: 400, rating: 4.6, reviews: 56, type: "Banquet Hall", space: "Indoor", rooms: 0, pricePerPlate: 800, rentalCost: 80000, veg: true, featured: false },
+  { id: "the-vedic-resort", name: "The Vedic Resort", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600", price: "₹3,00,000", priceLabel: "onwards", address: "Rajgir Road, Patna", locality: "Rajgir Road", capacity: "300-1000", capacityMin: 300, capacityMax: 1000, rating: 4.7, reviews: 67, type: "Resort", space: "Outdoor", rooms: 60, pricePerPlate: 1800, rentalCost: 300000, veg: false, featured: true },
+  { id: "patna-marriott", name: "Hotel Chanakya", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600", price: "₹1,80,000", priceLabel: "onwards", address: "Beer Chand Patel Marg, Patna", locality: "Beer Chand Patel Marg", capacity: "150-600", capacityMin: 150, capacityMax: 600, rating: 4.5, reviews: 98, type: "Hotel", space: "Indoor", rooms: 80, pricePerPlate: 1400, rentalCost: 180000, veg: false, featured: false },
+  { id: "rajdhani-lawn", name: "Rajdhani Party Lawn", image: "https://images.unsplash.com/photo-1478146059778-26028b07395a?w=600", price: "₹60,000", priceLabel: "onwards", address: "Bailey Road, Patna", locality: "Bailey Road", capacity: "200-800", capacityMin: 200, capacityMax: 800, rating: 4.4, reviews: 72, type: "Lawn", space: "Outdoor", rooms: 0, pricePerPlate: 600, rentalCost: 60000, veg: true, featured: false },
+  { id: "lemon-tree-patna", name: "Lemon Tree Hotel", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600", price: "₹1,20,000", priceLabel: "onwards", address: "Exhibition Road, Patna", locality: "Exhibition Road", capacity: "100-350", capacityMin: 100, capacityMax: 350, rating: 4.6, reviews: 83, type: "Hotel", space: "Indoor", rooms: 55, pricePerPlate: 1100, rentalCost: 120000, veg: false, featured: false },
+  { id: "shagun-garden", name: "Shagun Garden", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600", price: "₹45,000", priceLabel: "onwards", address: "Kankarbagh, Patna", locality: "Kankarbagh", capacity: "200-600", capacityMin: 200, capacityMax: 600, rating: 4.3, reviews: 45, type: "Lawn", space: "Outdoor", rooms: 0, pricePerPlate: 500, rentalCost: 45000, veg: true, featured: false },
 ];
 
 const venueCategories = [
@@ -25,11 +25,37 @@ const venueCategories = [
 ];
 
 const venueTypes = ["All", "Banquet Hall", "Hotel", "Resort", "Lawn"];
-const budgetRanges = [
-  { label: "All Budgets", value: "all" },
+const localities = ["All", "Boring Road", "NH-30", "Fraser Road", "Rajgir Road", "Beer Chand Patel Marg", "Bailey Road", "Exhibition Road", "Kankarbagh"];
+const guestRanges = [
+  { label: "Any Guests", value: "all" },
+  { label: "Up to 200", value: "200" },
+  { label: "200 - 500", value: "500" },
+  { label: "500 - 1000", value: "1000" },
+  { label: "1000+", value: "1000+" },
+];
+const roomOptions = [
+  { label: "Any Rooms", value: "all" },
+  { label: "No Rooms", value: "0" },
+  { label: "1 - 50", value: "50" },
+  { label: "50+", value: "50+" },
+];
+const plateRanges = [
+  { label: "Any Price/Plate", value: "all" },
+  { label: "Under ₹800", value: "under800" },
+  { label: "₹800 - ₹1200", value: "800to1200" },
+  { label: "₹1200+", value: "1200+" },
+];
+const rentalRanges = [
+  { label: "Any Rental", value: "all" },
   { label: "Under ₹1L", value: "under1" },
   { label: "₹1L - ₹2L", value: "1to2" },
   { label: "₹2L+", value: "above2" },
+];
+const spaceOptions = ["All", "Indoor", "Outdoor", "Both"];
+const ratingOptions = [
+  { label: "Any Rating", value: "all" },
+  { label: "4.5+", value: "4.5" },
+  { label: "4.0+", value: "4.0" },
 ];
 
 const blogs = [
@@ -77,12 +103,19 @@ const PatnaVenues = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [type, setType] = useState("All");
-  const [budget, setBudget] = useState("all");
+  const [locality, setLocality] = useState("All");
+  const [guests, setGuests] = useState("all");
+  const [roomFilter, setRoomFilter] = useState("all");
+  const [plateFilter, setPlateFilter] = useState("all");
+  const [rentalFilter, setRentalFilter] = useState("all");
+  const [spaceFilter, setSpaceFilter] = useState("All");
+  const [ratingFilter, setRatingFilter] = useState("all");
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [selectedVenue, setSelectedVenue] = useState<string | undefined>(undefined);
   const [showExitPopup, setShowExitPopup] = useState(false);
   const [exitShown, setExitShown] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(0);
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -98,19 +131,41 @@ const PatnaVenues = () => {
     return () => { document.removeEventListener("mouseleave", handleMouseLeave); clearTimeout(timer); };
   }, [exitShown]);
 
-  const getBudgetValue = (price: string) => {
-    const num = parseInt(price.replace(/[₹,]/g, ""));
-    if (num < 100000) return "under1";
-    if (num <= 200000) return "1to2";
-    return "above2";
-  };
-
   const filtered = patnaVenues.filter((v) => {
     if (type !== "All" && v.type !== type) return false;
-    if (budget !== "all" && getBudgetValue(v.price) !== budget) return false;
+    if (locality !== "All" && v.locality !== locality) return false;
+    if (spaceFilter !== "All" && v.space !== spaceFilter) return false;
     if (search && !v.name.toLowerCase().includes(search.toLowerCase()) && !v.address.toLowerCase().includes(search.toLowerCase())) return false;
+
+    // Guests
+    if (guests === "200") { if (v.capacityMax > 200) return false; }
+    else if (guests === "500") { if (v.capacityMin > 500 || v.capacityMax < 200) return false; }
+    else if (guests === "1000") { if (v.capacityMin > 1000 || v.capacityMax < 500) return false; }
+    else if (guests === "1000+") { if (v.capacityMax < 1000) return false; }
+
+    // Rooms
+    if (roomFilter === "0") { if (v.rooms !== 0) return false; }
+    else if (roomFilter === "50") { if (v.rooms === 0 || v.rooms > 50) return false; }
+    else if (roomFilter === "50+") { if (v.rooms < 50) return false; }
+
+    // Price per plate
+    if (plateFilter === "under800") { if (v.pricePerPlate >= 800) return false; }
+    else if (plateFilter === "800to1200") { if (v.pricePerPlate < 800 || v.pricePerPlate > 1200) return false; }
+    else if (plateFilter === "1200+") { if (v.pricePerPlate < 1200) return false; }
+
+    // Rental cost
+    if (rentalFilter === "under1") { if (v.rentalCost >= 100000) return false; }
+    else if (rentalFilter === "1to2") { if (v.rentalCost < 100000 || v.rentalCost > 200000) return false; }
+    else if (rentalFilter === "above2") { if (v.rentalCost < 200000) return false; }
+
+    // Rating
+    if (ratingFilter === "4.5") { if (v.rating < 4.5) return false; }
+    else if (ratingFilter === "4.0") { if (v.rating < 4.0) return false; }
+
     return true;
   });
+
+  const activeFilterCount = [type !== "All", locality !== "All", guests !== "all", roomFilter !== "all", plateFilter !== "all", rentalFilter !== "all", spaceFilter !== "All", ratingFilter !== "all", !!search].filter(Boolean).length;
 
   const openInquiry = (venueName?: string) => {
     setSelectedVenue(venueName);
@@ -196,22 +251,64 @@ const PatnaVenues = () => {
 
       {/* Sticky Filter Bar */}
       <section className="sticky top-[52px] z-40 bg-card border-y border-border/50 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center gap-3">
-          <div className="flex-1 w-full md:w-auto relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by venue name or area..." className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          {/* Row 1: Search + primary filters */}
+          <div className="flex flex-col md:flex-row items-center gap-3">
+            <div className="flex-1 w-full md:w-auto relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by venue name or area..." className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30" />
+            </div>
+            <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+              <select value={locality} onChange={(e) => setLocality(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[120px]">
+                {localities.map((l) => (<option key={l} value={l}>{l === "All" ? "All Localities" : l}</option>))}
+              </select>
+              <select value={type} onChange={(e) => setType(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[120px]">
+                {venueTypes.map((t) => (<option key={t} value={t}>{t === "All" ? "Venue Type" : t}</option>))}
+              </select>
+              <select value={guests} onChange={(e) => setGuests(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[120px]">
+                {guestRanges.map((g) => (<option key={g.value} value={g.value}>{g.label}</option>))}
+              </select>
+              <button onClick={() => setShowMoreFilters(!showMoreFilters)} className={`flex items-center gap-1.5 px-3 py-2.5 rounded-xl border font-body text-sm transition-all whitespace-nowrap ${showMoreFilters || activeFilterCount > 3 ? "border-accent bg-accent/10 text-accent-foreground" : "border-border/50 bg-secondary/50 text-foreground"}`}>
+                <SlidersHorizontal className="w-4 h-4" />
+                More Filters
+                {activeFilterCount > 3 && <span className="w-5 h-5 rounded-full gradient-gold text-accent-foreground text-[10px] font-bold flex items-center justify-center">{activeFilterCount - 3}</span>}
+              </button>
+            </div>
+            <button onClick={() => openInquiry()} className="hidden md:flex gradient-wine text-primary-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all items-center gap-2 whitespace-nowrap">
+              <Sparkles className="w-4 h-4" /> Get Expert Help
+            </button>
           </div>
-          <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-            <select value={type} onChange={(e) => setType(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]">
-              {venueTypes.map((t) => (<option key={t} value={t}>{t === "All" ? "All Types" : t}</option>))}
-            </select>
-            <select value={budget} onChange={(e) => setBudget(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 min-w-[130px]">
-              {budgetRanges.map((b) => (<option key={b.value} value={b.value}>{b.label}</option>))}
-            </select>
-          </div>
-          <button onClick={() => openInquiry()} className="hidden md:flex gradient-wine text-primary-foreground font-body text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all items-center gap-2 whitespace-nowrap">
-            <Sparkles className="w-4 h-4" /> Get Expert Help
-          </button>
+
+          {/* Row 2: Extended filters (collapsible) */}
+          <AnimatePresence>
+            {showMoreFilters && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 pt-3 mt-3 border-t border-border/30">
+                  <select value={roomFilter} onChange={(e) => setRoomFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {roomOptions.map((r) => (<option key={r.value} value={r.value}>{r.label}</option>))}
+                  </select>
+                  <select value={plateFilter} onChange={(e) => setPlateFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {plateRanges.map((p) => (<option key={p.value} value={p.value}>{p.label}</option>))}
+                  </select>
+                  <select value={rentalFilter} onChange={(e) => setRentalFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {rentalRanges.map((r) => (<option key={r.value} value={r.value}>{r.label}</option>))}
+                  </select>
+                  <select value={spaceFilter} onChange={(e) => setSpaceFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {spaceOptions.map((s) => (<option key={s} value={s}>{s === "All" ? "All Spaces" : s}</option>))}
+                  </select>
+                  <select value={ratingFilter} onChange={(e) => setRatingFilter(e.target.value)} className="px-3 py-2.5 rounded-xl bg-secondary/50 border border-border/50 font-body text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30">
+                    {ratingOptions.map((r) => (<option key={r.value} value={r.value}>{r.label}</option>))}
+                  </select>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
@@ -224,9 +321,9 @@ const PatnaVenues = () => {
               Showing <span className="font-semibold text-foreground">{filtered.length}</span> venues in Patna
             </p>
           </div>
-          {(type !== "All" || budget !== "all" || search) && (
-            <button onClick={() => { setType("All"); setBudget("all"); setSearch(""); }} className="flex items-center gap-1 text-sm font-body text-wine hover:text-wine-light transition-colors">
-              <X className="w-3.5 h-3.5" /> Clear
+          {activeFilterCount > 0 && (
+            <button onClick={() => { setType("All"); setLocality("All"); setGuests("all"); setRoomFilter("all"); setPlateFilter("all"); setRentalFilter("all"); setSpaceFilter("All"); setRatingFilter("all"); setSearch(""); }} className="flex items-center gap-1 text-sm font-body text-wine hover:text-wine-light transition-colors">
+              <X className="w-3.5 h-3.5" /> Clear all ({activeFilterCount})
             </button>
           )}
         </div>
@@ -265,11 +362,19 @@ const PatnaVenues = () => {
                     <MapPin className="w-3 h-3 text-accent shrink-0" />
                     <span className="font-body text-xs text-muted-foreground line-clamp-1">{venue.address}</span>
                   </div>
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex flex-wrap items-center gap-1.5 mt-2">
                     <span className="inline-flex items-center gap-1 bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
                       <Users className="w-2.5 h-2.5" /> {venue.capacity}
                     </span>
                     <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">{venue.type}</span>
+                    <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
+                      <span className="inline-flex items-center gap-0.5"><Utensils className="w-2.5 h-2.5" /> ₹{venue.pricePerPlate}/plate</span>
+                    </span>
+                    {venue.rooms > 0 && (
+                      <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
+                        <span className="inline-flex items-center gap-0.5"><BedDouble className="w-2.5 h-2.5" /> {venue.rooms} rooms</span>
+                      </span>
+                    )}
                   </div>
                   <button
                     onClick={() => openInquiry(venue.name)}
