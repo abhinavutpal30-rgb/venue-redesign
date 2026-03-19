@@ -242,7 +242,7 @@ const PatnaVenues = () => {
                         {venue.type}
                       </span>
                       {venue.veg && (
-                        <span className="inline-flex items-center bg-green-50 text-green-700 rounded-lg px-2.5 py-1 font-body text-xs font-medium">
+                        <span className="inline-flex items-center bg-accent/10 text-accent-foreground rounded-lg px-2.5 py-1 font-body text-xs font-medium">
                           Veg Available
                         </span>
                       )}

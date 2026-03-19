@@ -56,7 +56,7 @@ const InquiryFormPopup = ({ open, onClose, venueName }: InquiryFormPopupProps) =
             {submitted ? (
               <div className="p-10 text-center">
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }}>
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
                 </motion.div>
                 <h4 className="font-display text-lg font-bold text-foreground mb-2">Thank You!</h4>
                 <p className="font-body text-sm text-muted-foreground">Our wedding expert will contact you shortly.</p>
