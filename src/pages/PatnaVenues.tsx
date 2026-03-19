@@ -362,11 +362,19 @@ const PatnaVenues = () => {
                     <MapPin className="w-3 h-3 text-accent shrink-0" />
                     <span className="font-body text-xs text-muted-foreground line-clamp-1">{venue.address}</span>
                   </div>
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex flex-wrap items-center gap-1.5 mt-2">
                     <span className="inline-flex items-center gap-1 bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
                       <Users className="w-2.5 h-2.5" /> {venue.capacity}
                     </span>
                     <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">{venue.type}</span>
+                    <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
+                      <span className="inline-flex items-center gap-0.5"><Utensils className="w-2.5 h-2.5" /> ₹{venue.pricePerPlate}/plate</span>
+                    </span>
+                    {venue.rooms > 0 && (
+                      <span className="bg-secondary/60 rounded-md px-1.5 py-0.5 font-body text-[10px] text-muted-foreground">
+                        <span className="inline-flex items-center gap-0.5"><BedDouble className="w-2.5 h-2.5" /> {venue.rooms} rooms</span>
+                      </span>
+                    )}
                   </div>
                   <button
                     onClick={() => openInquiry(venue.name)}
