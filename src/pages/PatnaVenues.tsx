@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Users, Star, ArrowRight, Phone, Shield, Clock, Award, X, Sparkles, Camera, Palette, Heart, Flower2, ChevronRight, CheckCircle, BookOpen, Eye, CalendarCheck, UserCheck, Plus, Minus } from "lucide-react";
+import { Search, MapPin, Users, Star, ArrowRight, Phone, Shield, Clock, Award, X, Sparkles, Camera, Palette, Heart, Flower2, ChevronRight, CheckCircle, BookOpen, Eye, CalendarCheck, UserCheck, Plus, Minus, SlidersHorizontal, BedDouble, Utensils, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import InquiryFormPopup from "@/components/InquiryFormPopup";
 import Footer from "@/components/Footer";
