@@ -5,12 +5,22 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const destinations = [
-  { name: "Udaipur", image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=400" },
-  { name: "Jaipur", image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400" },
+  { name: "Puri", image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=400" },
   { name: "Goa", image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=400" },
-  { name: "Kerala", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400" },
+  { name: "Delhi", image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400" },
+  { name: "Mumbai", image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400" },
+  { name: "Jaipur", image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400" },
+  { name: "Darjeeling", image: "https://images.unsplash.com/photo-1622308644420-27c0d7bce884?w=400" },
+  { name: "Kolkata", image: "https://images.unsplash.com/photo-1558431382-27e303142255?w=400" },
+  { name: "Mandarmoni", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" },
+  { name: "Digha", image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400" },
+  { name: "Varanasi", image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400" },
   { name: "Rishikesh", image: "https://images.unsplash.com/photo-1600100397608-e4b0eae34c5e?w=400" },
-  { name: "Jim Corbett", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400" },
+  { name: "Vrindavan", image: "https://images.unsplash.com/photo-1627894483216-2138af692e32?w=400" },
+  { name: "Ranchi", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400" },
+  { name: "Deoghar", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400" },
+  { name: "Patna", image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=400" },
+  { name: "Gaya Ji", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400" },
 ];
 
 const DestinationWedding = () => {
