@@ -60,7 +60,7 @@ const DestinationWedding = () => {
           >
             {[
               { value: "50+", label: "Venues" },
-              { value: "12+", label: "Cities" },
+              { value: "16", label: "Cities" },
               { value: "24/7", label: "Support" },
             ].map((stat) => (
               <div key={stat.label} className="text-center px-4">
