@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import ListYourVenue from "./pages/ListYourVenue";
 import NotFound from "./pages/NotFound";
 import PatnaVenues from "./pages/PatnaVenues";
+import DestinationWedding from "./pages/DestinationWedding";
 import WhatsAppButton from "./components/WhatsAppButton";
 
 const queryClient = new QueryClient();
