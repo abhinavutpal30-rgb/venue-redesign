@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import ListYourVenue from "./pages/ListYourVenue";
 import NotFound from "./pages/NotFound";
 import PatnaVenues from "./pages/PatnaVenues";
+import KolkataVenues from "./pages/KolkataVenues";
 import DestinationWedding from "./pages/DestinationWedding";
 import WhatsAppButton from "./components/WhatsAppButton";
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/list-your-venue" element={<ListYourVenue />} />
           <Route path="/patna" element={<PatnaVenues />} />
+          <Route path="/kolkata" element={<KolkataVenues />} />
           <Route path="/destination-wedding" element={<DestinationWedding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
